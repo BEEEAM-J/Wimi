@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff2cc"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -35,8 +34,9 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:hint=" User Id"
-            android:background="#ffff"
+            android:background="@drawable/edt_custom"
             android:textSize="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp" />
 
@@ -57,11 +57,13 @@
             android:id="@+id/lg_EdtPassword"
             android:layout_width="250dp"
             android:layout_height="50dp"
+            android:inputType="textPassword"
             android:hint=" Password"
             android:textSize="20dp"
-            android:background="#ffff"
+            android:background="@drawable/edt_custom"
             app:layout_constraintTop_toBottomOf="@+id/su_TvPassword"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:layout_marginStart="30dp" />
 

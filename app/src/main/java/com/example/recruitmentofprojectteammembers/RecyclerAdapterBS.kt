@@ -1,5 +1,6 @@
 package com.example.recruitmentofprojectteammembers
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,13 +10,21 @@ import com.example.recruitmentofprojectteammembers.databinding.PostTitleBinding
 import data.PostModel
 
 
-class RecyclerAdapter : ListAdapter<PostModel, RecyclerAdapter.ViewHolder>(diffUtil){
+class RecyclerAdapterBS : ListAdapter<PostModel, RecyclerAdapterBS.ViewHolder>(diffUtil){
 
     inner class ViewHolder(var binding: PostTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val context = binding.root.context
+
         fun bind(item: PostModel) {
             binding.apply {
                 postTitle.text = item.title
+            }
+            // 리사이클러뷰 아이템 클릭 이벤트 설정
+            itemView.setOnClickListener(){
+                val intent = Intent(context, DetailPostActivity::class.java)
+                intent.run { context.startActivity(this) }
             }
         }
     }

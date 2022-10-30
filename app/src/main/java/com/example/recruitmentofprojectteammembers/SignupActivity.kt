@@ -18,9 +18,7 @@ class SignupActivity : AppCompatActivity() {
 
         binding.suCheckSignup.setOnClickListener(){
             Toast.makeText(this@SignupActivity, "${binding.suEdtId.text}님 회원가입이 완료 되었습니다!!", Toast.LENGTH_LONG).show()
-
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }

@@ -15,6 +15,27 @@
         android:theme="@style/Theme.RecruitmentOfProjectTeamMembers"
         tools:targetApi="31">
         <activity
+            android:name=".DetailMyPostActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".DetailPostActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PostcontentActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MypostActivity"
             android:exported="false">
             <meta-data
