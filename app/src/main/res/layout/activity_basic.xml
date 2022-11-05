@@ -27,6 +27,7 @@
             android:background="@drawable/edt_custom"/>
 
         <Button
+            android:id="@+id/bs_searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="검색"

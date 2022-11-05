@@ -1,6 +1,7 @@
 package network
 
 import data.Login
+import data.PostModel
 import data.Reply
 import retrofit2.Call
 import retrofit2.http.Field
@@ -31,4 +32,17 @@ interface RetrofitService {
         @Field("replyContent") replyContent : String
     ) : Call<Reply>
 
+    // 게시물 수정
+    @POST("/postRevise/")
+    fun requestRevise(
+        @Field("postTitle") postTitle : String,
+        @Field("postContent") postContent : String
+    ) : Call<PostModel>
+
+    // 게시물 등록
+    @POST("/posting/")
+    fun requestPosting(
+        @Field("postTitle") postTitle : String,
+        @Field("postContent") postContent : String
+    ) : Call<PostModel>
 }
