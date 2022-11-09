@@ -20,6 +20,8 @@ class SearchResActivity : AppCompatActivity() {
         binding.srRecyclerPost.layoutManager = LinearLayoutManager(this@SearchResActivity)
         val recyclerAdapter = RecyclerAdapterBS()
         binding.srRecyclerPost.adapter = recyclerAdapter
+        // 리사이클러뷰 아이템 공백 설정 클래스 적용
+        binding.srRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
         // 리사이클러뷰에 출력할 리스트를 어댑터로 전송
         recyclerAdapter.submitList(getBSPostItemList())

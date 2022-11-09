@@ -30,6 +30,8 @@ class DetailPostActivity : AppCompatActivity() {
         binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
         val recyclerAdapter = RecyclerAdapterDP()
         binding.dpReplyRecycler.adapter = recyclerAdapter
+        // 리사이클러뷰 아이템 공백 설정 클래스 적용
+        binding.dpReplyRecycler.addItemDecoration(recyclerDecoration(40))
 
 
 
@@ -55,11 +57,13 @@ class DetailPostActivity : AppCompatActivity() {
             // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
             resultList.add(Reply(replyContent))
             recyclerAdapter.submitList(resultList)
+            // 리사이클러뷰 업데이트
+            recyclerAdapter.notifyDataSetChanged()
 
-            var dialog = AlertDialog.Builder(this@DetailPostActivity)
-            dialog.setTitle("댓글 작성 완료")
-            dialog.setMessage("${replyContent}")
-            dialog.show()
+//            var dialog = AlertDialog.Builder(this@DetailPostActivity)
+//            dialog.setTitle("댓글 작성 완료")
+//            dialog.setMessage("${replyContent}")
+//            dialog.show()
         }
     }
 

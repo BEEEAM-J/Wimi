@@ -16,9 +16,12 @@ class MypostActivity : AppCompatActivity() {
         binding = ActivityMypostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 리사이클러뷰 어댑터 선언
         binding.mpRecyclerPost.layoutManager = LinearLayoutManager(this@MypostActivity)
         val recycleradapter = RecyclerAdapterMP()
         binding.mpRecyclerPost.adapter = recycleradapter
+        // 리사이클러뷰 아이템 공백 설정 클래스 적용
+        binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
         recycleradapter.submitList(getMPPostItemList())
     }
