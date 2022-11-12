@@ -20,10 +20,13 @@ class RecyclerAdapterBS : ListAdapter<PostModel, RecyclerAdapterBS.ViewHolder>(d
         fun bind(item: PostModel) {
             binding.apply {
                 postTitle.text = item.title
+                postContent.text = item.content
             }
             // 리사이클러뷰 아이템 클릭 이벤트 설정
             itemView.setOnClickListener(){
                 val intent = Intent(context, DetailPostActivity::class.java)
+                intent.putExtra("title", item.title)
+                intent.putExtra("content", item.content)
                 intent.run { context.startActivity(this) }
             }
         }

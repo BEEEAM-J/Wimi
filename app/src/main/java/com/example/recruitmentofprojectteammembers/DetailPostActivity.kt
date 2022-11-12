@@ -20,11 +20,17 @@ class DetailPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_post)
 
+        var postTitle = intent.getStringExtra("title")
+        var postContent = intent.getStringExtra("content")
+
         var replyContent : String
         var resultList = arrayListOf<Reply>()
 
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.dpTitle.text = postTitle
+        binding.dpContent.text = postContent
 
         // 리사이클러뷰 어댑터 선언
         binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)

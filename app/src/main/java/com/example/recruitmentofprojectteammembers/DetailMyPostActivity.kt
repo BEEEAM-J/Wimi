@@ -17,16 +17,22 @@ class DetailMyPostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_my_post)
 
+        var beforeTitle = intent.getStringExtra("title")
+        var beforeContent = intent.getStringExtra("content")
+
         var postTitle : String
         var postContent : String
 
         bindng = ActivityDetailMyPostBinding.inflate(layoutInflater)
         setContentView(bindng.root)
 
+//        bindng.dmpEdtTitle.text = beforeTitle
+
+
         // 수정 버튼 눌렀을 때
         bindng.dmpBtnChange.setOnClickListener(){
-            postTitle = bindng.dmpBtnChange.text.toString()
-            postContent = bindng.dmpBtnRemove.text.toString()
+            postTitle = bindng.dmpEdtTitle.text.toString()
+            postContent = bindng.dmpEdtContent.text.toString()
 
             // 변경된 내용을 서버로 전송
 //            retrofitService.requestRevise(postTitle, postContent).enqueue(object : Callback<PostModel>{

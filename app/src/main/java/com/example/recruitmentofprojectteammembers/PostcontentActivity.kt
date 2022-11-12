@@ -1,7 +1,10 @@
 package com.example.recruitmentofprojectteammembers
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.recruitmentofprojectteammembers.databinding.ActivityPostcontentBinding
 import data.PostModel
@@ -42,6 +45,11 @@ class PostcontentActivity : AppCompatActivity() {
 //            })
 
             Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!!", Toast.LENGTH_LONG).show()
+
+            val returnIntent = Intent()
+            returnIntent.putExtra("postTitle", postTitle)
+            returnIntent.putExtra("postContent", postContent)
+            setResult(Activity.RESULT_OK, returnIntent)
             finish()
         }
     }
