@@ -53,8 +53,8 @@ class BasicActivity : AppCompatActivity() {
                 val postTitle = result.data?.getStringExtra("postTitle").toString()
                 val postContent = result.data?.getStringExtra("postContent").toString()
                 postList.add(PostModel(postTitle, postContent))
-                recyclerAdapter.submitList(postList)
-                recyclerAdapter.notifyDataSetChanged()
+                recyclerAdapter.submitList(postList.toList())
+
             }
         }
 

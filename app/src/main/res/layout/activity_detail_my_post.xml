@@ -34,27 +34,33 @@
         android:layout_marginStart="35dp"
         android:layout_marginEnd="35dp" />
 
-    <Button
-        android:id="@+id/dmp_btnChange"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="수정"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="100dp"
-        android:layout_marginBottom="20dp"/>
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/dmp_btnRemove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="삭제"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="20dp"/>
+        <Button
+            android:id="@+id/dmp_btnChange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="수정"
+            android:textStyle="bold"
+            android:background="@drawable/btn_custom2"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/dmp_btnRemove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="삭제"
+            android:textStyle="bold"
+            android:background="@drawable/btn_custom2" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

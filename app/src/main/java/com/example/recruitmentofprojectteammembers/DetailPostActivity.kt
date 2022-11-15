@@ -62,9 +62,7 @@ class DetailPostActivity : AppCompatActivity() {
 
             // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
             resultList.add(Reply(replyContent))
-            recyclerAdapter.submitList(resultList)
-            // 리사이클러뷰 업데이트
-            recyclerAdapter.notifyDataSetChanged()
+            recyclerAdapter.submitList(resultList.toList())
 
 //            var dialog = AlertDialog.Builder(this@DetailPostActivity)
 //            dialog.setTitle("댓글 작성 완료")

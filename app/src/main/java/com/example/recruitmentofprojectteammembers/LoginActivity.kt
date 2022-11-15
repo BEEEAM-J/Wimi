@@ -3,9 +3,11 @@ package com.example.recruitmentofprojectteammembers
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.recruitmentofprojectteammembers.databinding.ActivityLoginBinding
 import data.Login
+import data.LoginData
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,20 +33,25 @@ class LoginActivity : AppCompatActivity() {
             usrPw = binding.lgEdtPassword.text.toString()
 
             // 레트로핏 사용 로그인 성공 여부 판단
-//            retrofitService.requestLogin(usrID, usrPw).enqueue(object : Callback<Login>{
+//            retrofitService.requestLogin(LoginData(usrID, usrPw)).enqueue(object : Callback<Login>{
 //                override fun onResponse(call: Call<Login>, response: Response<Login>) {
-//                    // 로그인 성공하면 화면 전환
-//                    val intent = Intent(this@LoginActivity, BasicActivity::class.java)
-//                    // 아이디 전달
-//                    intent.putExtra("id", usrID)
-//                    startActivity(intent)
+//                    if(response.isSuccessful){
+//                        // 로그인 성공하면 화면 전환
+//                        val intent = Intent(this@LoginActivity, BasicActivity::class.java)
+//                        // 아이디 전달
+//                        intent.putExtra("id", usrID)
+//                        startActivity(intent)
+//                    }
+//                    else{
+//                        var dialog = AlertDialog.Builder(this@LoginActivity)
+//                        dialog.setTitle("로그인 실패")
+//                        dialog.setMessage("아이디나 비밀번호를 다시 확인하세요!")
+//                        dialog.show()
+//                    }
 //                }
 //
 //                override fun onFailure(call: Call<Login>, t: Throwable) {
-//                    var dialog = AlertDialog.Builder(this@LoginActivity)
-//                    dialog.setTitle("로그인 실패")
-//                    dialog.setMessage("아이디나 비밀번호를 다시 확인하세요!")
-//                    dialog.show()
+//                    Toast.makeText(this@LoginActivity, "다시 시도 해보세요", Toast.LENGTH_SHORT).show()
 //                }
 //
 //            })
