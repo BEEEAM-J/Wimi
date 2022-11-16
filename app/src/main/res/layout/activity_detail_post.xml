@@ -10,7 +10,7 @@
         android:id="@+id/dp_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="제목 ex) 집에 언제가냐;;"
+        android:text="제목 ex) 갸갸갸갸갸갹"
         android:textSize="30dp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:id="@+id/dp_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="내용 ex) 할거 많은데 집 가고싶다 ㅜㅜㅜ"
+        android:text="내용 ex) 갸갸갸갸갸갸갸갸갸갹"
         android:textSize="20dp"
         android:textColor="@color/black"
         android:layout_marginStart="25dp"
@@ -34,14 +34,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/dp_content"
+        app:layout_constraintBottom_toTopOf="@+id/botlayout"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        app:layout_constrainedHeight="true"
         android:background="@drawable/btn_custom2">
 
         <TextView
@@ -50,8 +50,6 @@
             android:layout_height="wrap_content"
             android:text="댓글"
             android:textSize="20dp"
-            app:layout_constraintTop_toBottomOf="@+id/dp_content"
-            app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="20dp"
             android:layout_marginStart="25dp"/>
 
@@ -59,8 +57,7 @@
             android:id="@+id/dp_replyRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/dp_replyTv"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constrainedHeight="true"
             android:layout_marginTop="25dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
@@ -69,6 +66,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/botlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent">

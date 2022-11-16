@@ -26,7 +26,8 @@ class DetailMyPostActivity : AppCompatActivity() {
         bindng = ActivityDetailMyPostBinding.inflate(layoutInflater)
         setContentView(bindng.root)
 
-//        bindng.dmpEdtTitle.text = beforeTitle
+        bindng.dmpEdtTitle.setText(beforeTitle)
+        bindng.dmpEdtContent.setText(beforeContent)
 
 
         // 수정 버튼 눌렀을 때

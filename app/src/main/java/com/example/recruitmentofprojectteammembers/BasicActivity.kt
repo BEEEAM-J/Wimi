@@ -1,18 +1,13 @@
 package com.example.recruitmentofprojectteammembers
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityBasicBinding
-import com.example.recruitmentofprojectteammembers.databinding.ActivityMainBinding
 import data.PostModel
-import data.Reply
 
 private lateinit var binding: ActivityBasicBinding
 
@@ -20,8 +15,6 @@ class BasicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic)
-
-        Log.d("1", "Log ----- 3")
 
         binding = ActivityBasicBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -54,7 +47,6 @@ class BasicActivity : AppCompatActivity() {
                 val postContent = result.data?.getStringExtra("postContent").toString()
                 postList.add(PostModel(postTitle, postContent))
                 recyclerAdapter.submitList(postList.toList())
-
             }
         }
 

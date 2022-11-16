@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isInvisible
 import com.example.recruitmentofprojectteammembers.databinding.ActivitySignupBinding
 import data.SignupData
 import data.Signup
@@ -29,6 +30,9 @@ class SignupActivity : AppCompatActivity() {
 
         // 회원가입 버튼 눌렀을 때
        binding.suCheckSignup.setOnClickListener(){
+
+           binding.progressSignUp.visibility
+
            signUsrId = binding.suEdtId.text.toString()
            signUsrPw = binding.suEdtPassword.text.toString()
            signUsrEmail = binding.suEdtEmail.text.toString()
@@ -42,13 +46,16 @@ class SignupActivity : AppCompatActivity() {
 //                   }
 //                   아이디 중복 외의 이유 모를 오류인 경우
                    if (response.body() == Signup("unknownError")){
+                       binding.progressSignUp.isInvisible
                        Toast.makeText(this@SignupActivity, "다시 시도 해보세요!", Toast.LENGTH_LONG).show()
                    }
 //                   중복된 아이디가 입력된 경우
                    else if(response.body() == Signup("overlap")){
+                       binding.progressSignUp.isInvisible
                        Toast.makeText(this@SignupActivity, "이미 존재하는 아이디입니다.", Toast.LENGTH_LONG).show()
                    }
                    else{
+                       binding.progressSignUp.isInvisible
                        Toast.makeText(this@SignupActivity, "${binding.suEdtId.text}님 회원가입이 완료 되었습니다!!", Toast.LENGTH_LONG).show()
                        finish()
                    }

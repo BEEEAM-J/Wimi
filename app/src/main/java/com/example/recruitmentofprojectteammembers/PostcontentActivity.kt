@@ -34,7 +34,7 @@ class PostcontentActivity : AppCompatActivity() {
             // 서버와 통신하여 게시물 등록
 //            retrofitService.requestPosting(postTitle, postContent).enqueue(object : Callback<PostModel>{
 //                override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-//                    Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!!", Toast.LENGTH_LONG).show()
+//                    Toast.makeText(this@PostcontentActivity, "게시물 ㅈㅂ등록 완료!!", Toast.LENGTH_LONG).show()
 //                    finish()
 //                }
 //
@@ -44,13 +44,23 @@ class PostcontentActivity : AppCompatActivity() {
 //
 //            })
 
-            Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!!", Toast.LENGTH_LONG).show()
+//            제목을 입력하지 않은 경우
+            if (postTitle == ""){
+                Toast.makeText(this@PostcontentActivity, "제목을 입력하세요!", Toast.LENGTH_SHORT).show()
+            }
+//            내용을 입력하지 않은 경우
+            else if(postContent == ""){
+                Toast.makeText(this@PostcontentActivity, "내용을 입력하세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!!", Toast.LENGTH_LONG).show()
 
-            val returnIntent = Intent()
-            returnIntent.putExtra("postTitle", postTitle)
-            returnIntent.putExtra("postContent", postContent)
-            setResult(Activity.RESULT_OK, returnIntent)
-            finish()
+                val returnIntent = Intent()
+                returnIntent.putExtra("postTitle", postTitle)
+                returnIntent.putExtra("postContent", postContent)
+                setResult(Activity.RESULT_OK, returnIntent)
+                finish()
+            }
         }
     }
 }
