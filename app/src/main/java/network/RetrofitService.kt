@@ -36,9 +36,8 @@ interface RetrofitService {
     ) : Call<PostModel>
 
     // 게시물 등록
-    @POST("/posting/")
+    @POST("project/write")
     fun requestPosting(
-        @Field("postTitle") postTitle : String,
-        @Field("postContent") postContent : String
-    ) : Call<PostModel>
+        @Body postData: PostData
+    ) : Call<Posting>
 }

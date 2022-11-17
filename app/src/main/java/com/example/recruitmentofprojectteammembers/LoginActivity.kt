@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
         var usrID : String
         var usrPw : String
+        var loginResponse : Login
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -33,33 +34,43 @@ class LoginActivity : AppCompatActivity() {
             usrPw = binding.lgEdtPassword.text.toString()
 
             // 레트로핏 사용 로그인 성공 여부 판단
-//            retrofitService.requestLogin(LoginData(usrID, usrPw)).enqueue(object : Callback<Login>{
-//                override fun onResponse(call: Call<Login>, response: Response<Login>) {
-//                    if(response.isSuccessful){
-//                        // 로그인 성공하면 화면 전환
-//                        val intent = Intent(this@LoginActivity, BasicActivity::class.java)
-//                        // 아이디 전달
-//                        intent.putExtra("id", usrID)
-//                        startActivity(intent)
-//                    }
-//                    else{
-//                        var dialog = AlertDialog.Builder(this@LoginActivity)
-//                        dialog.setTitle("로그인 실패")
-//                        dialog.setMessage("아이디나 비밀번호를 다시 확인하세요!")
-//                        dialog.show()
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Login>, t: Throwable) {
-//                    Toast.makeText(this@LoginActivity, "다시 시도 해보세요", Toast.LENGTH_SHORT).show()
-//                }
-//
-//            })
+            retrofitService.requestLogin(LoginData(usrID, usrPw)).enqueue(object : Callback<Login>{
+                override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                    loginResponse = response.body()!!
+//                    없는 회원인 경우
+                    if(loginResponse.login_status == "not exist"){
+                        var dialog = AlertDialog.Builder(this@LoginActivity)
+                        dialog.setTitle("존재하지 않는 회원입니다.")
+                        dialog.setMessage("")
+                        dialog.show()
+                    }
+//                    비밀번호가 틀린 경우
+                    else if(loginResponse.login_status == "pw mismatch"){
+                        var dialog = AlertDialog.Builder(this@LoginActivity)
+                        dialog.setTitle("비밀번호가 틀립니다.")
+                        dialog.setMessage("")
+                        dialog.show()
+                    }
+//                    로그인 성공
+                    else if (loginResponse.login_status == "login success"){
+                        // 로그인 성공하면 화면 전환
+                        val intent = Intent(this@LoginActivity, BasicActivity::class.java)
+                        // 아이디 전달
+                        intent.putExtra("member_id", loginResponse.member_id)
+                        startActivity(intent)
+                    }
+                }
 
-            val intent = Intent(this, BasicActivity::class.java)
-            // 아이디 전달
-            intent.putExtra("id", usrID)
-            startActivity(intent)
+                override fun onFailure(call: Call<Login>, t: Throwable) {
+                    Toast.makeText(this@LoginActivity, "다시 시도 해보세요", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+
+//            val intent = Intent(this, BasicActivity::class.java)
+//            // 아이디 전달
+//            intent.putExtra("id", usrID)
+//            startActivity(intent)
         }
     }
 }

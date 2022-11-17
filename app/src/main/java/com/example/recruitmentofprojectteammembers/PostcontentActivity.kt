@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.recruitmentofprojectteammembers.databinding.ActivityPostcontentBinding
+import data.PostData
 import data.PostModel
+import data.Posting
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,6 +25,7 @@ class PostcontentActivity : AppCompatActivity() {
 
         var postTitle : String
         var postContent : String
+        val member_id = intent.getIntExtra("member_id", 0)
 
         binding = ActivityPostcontentBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -30,19 +34,6 @@ class PostcontentActivity : AppCompatActivity() {
         binding.pcBtnPost.setOnClickListener(){
             postTitle = binding.pcEdtTitle.text.toString()
             postContent = binding.pcEdtContent.text.toString()
-
-            // 서버와 통신하여 게시물 등록
-//            retrofitService.requestPosting(postTitle, postContent).enqueue(object : Callback<PostModel>{
-//                override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-//                    Toast.makeText(this@PostcontentActivity, "게시물 ㅈㅂ등록 완료!!", Toast.LENGTH_LONG).show()
-//                    finish()
-//                }
-//
-//                override fun onFailure(call: Call<PostModel>, t: Throwable) {
-//                    Toast.makeText(this@PostcontentActivity, "에러! 다시 시도 ㄱㄱ", Toast.LENGTH_LONG).show()
-//                }
-//
-//            })
 
 //            제목을 입력하지 않은 경우
             if (postTitle == ""){
@@ -53,13 +44,31 @@ class PostcontentActivity : AppCompatActivity() {
                 Toast.makeText(this@PostcontentActivity, "내용을 입력하세요", Toast.LENGTH_SHORT).show()
             }
             else {
-                Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!!", Toast.LENGTH_LONG).show()
+                // 서버와 통신하여 게시물 등록
+                retrofitService.requestPosting(PostData(member_id, postTitle, postContent)).enqueue(object : Callback<Posting>{
+                    override fun onResponse(call: Call<Posting>, response: Response<Posting>) {
+//                    오류가 생겼을 경우
+                        if (response.body() == Posting("error")){
+                            var dialog = AlertDialog.Builder(this@PostcontentActivity)
+                            dialog.setTitle("다시 시도해주세요.")
+                            dialog.setMessage("")
+                            dialog.show()
+                        }
+//                    정상적으로 등록된 경우
+                        else if (response.body() == Posting("success")){
+                            val returnIntent = Intent()
+                            returnIntent.putExtra("postTitle", postTitle)
+                            returnIntent.putExtra("postContent", postContent)
+                            setResult(Activity.RESULT_OK, returnIntent)
+                            finish()
+                        }
+                    }
 
-                val returnIntent = Intent()
-                returnIntent.putExtra("postTitle", postTitle)
-                returnIntent.putExtra("postContent", postContent)
-                setResult(Activity.RESULT_OK, returnIntent)
-                finish()
+                    override fun onFailure(call: Call<Posting>, t: Throwable) {
+                        Toast.makeText(this@PostcontentActivity, "에러! 다시 시도 ㄱㄱ", Toast.LENGTH_LONG).show()
+                    }
+
+                })
             }
         }
     }

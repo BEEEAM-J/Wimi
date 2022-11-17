@@ -21,8 +21,8 @@ class BasicActivity : AppCompatActivity() {
 
         var postList = arrayListOf<PostModel>()
 
-        // 사용자 이름 받아옴
-        var usrID = intent.getStringExtra("id");
+        // member_id 받아옴
+        var usrID = intent.getIntExtra("member_id", 0);
 
         var searchCont : String
 
@@ -63,6 +63,7 @@ class BasicActivity : AppCompatActivity() {
         binding.bsPostingBtn.setOnClickListener(){
 
             val intent = Intent(this, PostcontentActivity::class.java)
+            intent.putExtra("member_id", usrID)
             startForResult.launch(intent)
 
         }
