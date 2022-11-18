@@ -64,6 +64,7 @@ class DetailPostActivity : AppCompatActivity() {
             resultList.add(Reply(replyContent))
             recyclerAdapter.submitList(resultList.toList())
 
+
 //            var dialog = AlertDialog.Builder(this@DetailPostActivity)
 //            dialog.setTitle("댓글 작성 완료")
 //            dialog.setMessage("${replyContent}")

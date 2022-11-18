@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="finpo_main_button" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/selector_main_button_bg</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:textColor">@color/selector_main_button_text</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+</resources>

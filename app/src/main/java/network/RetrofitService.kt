@@ -22,6 +22,12 @@ interface RetrofitService {
         @Body loginData : LoginData
     ) : Call<Login>
 
+    // 게시물 등록
+    @POST("project/write")
+    fun requestPosting(
+        @Body postData: PostData
+    ) : Call<Posting>
+
     // 댓글 작성
     @POST("/postReply/")
     fun requestReply(
@@ -35,9 +41,5 @@ interface RetrofitService {
         @Field("postContent") postContent : String
     ) : Call<PostModel>
 
-    // 게시물 등록
-    @POST("project/write")
-    fun requestPosting(
-        @Body postData: PostData
-    ) : Call<Posting>
+
 }
