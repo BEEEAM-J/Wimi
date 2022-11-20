@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailPostBinding
+import data.Login
 import data.PostModel
 import data.Reply
 import network.RetrofitClient.retrofitService
@@ -64,11 +65,8 @@ class DetailPostActivity : AppCompatActivity() {
             resultList.add(Reply(replyContent))
             recyclerAdapter.submitList(resultList.toList())
 
+            binding.dpReplyEdt.setText("")
 
-//            var dialog = AlertDialog.Builder(this@DetailPostActivity)
-//            dialog.setTitle("댓글 작성 완료")
-//            dialog.setMessage("${replyContent}")
-//            dialog.show()
         }
     }
 

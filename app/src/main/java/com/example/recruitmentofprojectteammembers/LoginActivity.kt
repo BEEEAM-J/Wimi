@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                     else if (loginResponse.login_status == "login success"){
                         // 로그인 성공하면 화면 전환
                         val intent = Intent(this@LoginActivity, BasicActivity::class.java)
-                        // 아이디 전달
+                        // member_id 전달
                         intent.putExtra("member_id", loginResponse.member_id)
                         startActivity(intent)
                     }

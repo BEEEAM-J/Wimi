@@ -4,31 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/recycler_custom_reply"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
 
     <TextView
         android:id="@+id/replyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="작성자 이름"
-        android:textSize="17dp"
+        android:textSize="16sp"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"/>
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/replyContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="내용 ㅋㅋ"
-        android:textSize="13dp"
-        android:textColor="@color/black"
+        android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/replyName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginTop="4dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
