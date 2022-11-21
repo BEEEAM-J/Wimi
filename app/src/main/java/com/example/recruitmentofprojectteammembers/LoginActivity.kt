@@ -14,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private lateinit var binding: ActivityLoginBinding
+lateinit var loginResponse : Login
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
         var usrID : String
         var usrPw : String
-        var loginResponse : Login
+
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)

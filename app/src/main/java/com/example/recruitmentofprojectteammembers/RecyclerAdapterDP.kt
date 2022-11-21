@@ -18,6 +18,7 @@ class RecyclerAdapterDP : ListAdapter<Reply, RecyclerAdapterDP.ViewHolder>(diffU
 
         fun bind(item: Reply) {
             binding.apply {
+                replyName.text = item.name
                 replyContent.text = item.content
             }
         }

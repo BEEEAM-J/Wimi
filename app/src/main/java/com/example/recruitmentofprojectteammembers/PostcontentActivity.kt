@@ -25,7 +25,6 @@ class PostcontentActivity : AppCompatActivity() {
 
         var postTitle : String
         var postContent : String
-        val member_id = intent.getIntExtra("member_id", 0)
 
         binding = ActivityPostcontentBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,14 +50,12 @@ class PostcontentActivity : AppCompatActivity() {
             }
             else {
                 // 서버와 통신하여 게시물 등록
-                retrofitService.requestPosting(PostData(member_id, postTitle, postContent)).enqueue(object : Callback<Posting>{
+                retrofitService.requestPosting(PostData(loginResponse.member_id, postTitle, postContent)).enqueue(object : Callback<Posting>{
                     override fun onResponse(call: Call<Posting>, response: Response<Posting>) {
 //                    정상적으로 등록된 경우
-                        Log.d("TAG", "Log 1")
 
                         if (response.body() == Posting("success")){
                             Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!", Toast.LENGTH_SHORT).show()
-                            Log.d("TAG", "Log 2")
                             val returnIntent = Intent()
                             returnIntent.putExtra("postTitle", postTitle)
                             returnIntent.putExtra("postContent", postContent)

@@ -21,9 +21,6 @@ class BasicActivity : AppCompatActivity() {
 
         var postList = arrayListOf<PostModel>()
 
-        // member_id 받아옴
-        var usrID = intent.getIntExtra("member_id", 0);
-
         var searchCont : String
 
         // 리사이클러뷰 역순 설정
@@ -63,7 +60,6 @@ class BasicActivity : AppCompatActivity() {
         binding.bsPostingBtn.setOnClickListener(){
 
             val intent = Intent(this, PostcontentActivity::class.java)
-            intent.putExtra("member_id", usrID)
             startForResult.launch(intent)
 
         }

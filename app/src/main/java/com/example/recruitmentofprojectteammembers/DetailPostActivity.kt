@@ -62,7 +62,7 @@ class DetailPostActivity : AppCompatActivity() {
 //            })
 
             // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
-            resultList.add(Reply(replyContent))
+            resultList.add(Reply(loginResponse.member_name,replyContent))
             recyclerAdapter.submitList(resultList.toList())
 
             binding.dpReplyEdt.setText("")

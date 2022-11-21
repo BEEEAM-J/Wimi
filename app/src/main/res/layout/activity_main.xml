@@ -11,7 +11,7 @@
         android:id="@+id/tvMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="위미: 마음 맞는 팀원을 구해보세요!🔥"
+        android:text="                      위미:) \n\n마음 맞는 팀원을 구해보세요!🔥"
         android:textSize="20sp"
         android:textColor="@color/Point_P1"
         android:textStyle="bold"
