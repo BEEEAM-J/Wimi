@@ -40,8 +40,7 @@ class DetailPostActivity : AppCompatActivity() {
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.dpReplyRecycler.addItemDecoration(recyclerDecoration(40))
 
-
-
+//        댓글 등록 버튼 클릭한 경우
         binding.dpReplyBtn.setOnClickListener(){
             replyContent = binding.dpReplyEdt.text.toString()
 
@@ -61,11 +60,20 @@ class DetailPostActivity : AppCompatActivity() {
 //
 //            })
 
-            // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
-            resultList.add(Reply(loginResponse.member_name,replyContent))
-            recyclerAdapter.submitList(resultList.toList())
+//            빈 값으로 댓글 등록을 시도하는 경우
+            if(binding.dpReplyEdt.text.toString() == ""){
+                var dialog = AlertDialog.Builder(this@DetailPostActivity)
+                dialog.setTitle("내용을 입력하세요.")
+                dialog.setMessage("")
+                dialog.show()
+            }
+            else{
+                // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
+                resultList.add(Reply(loginResponse.member_name,replyContent))
+                recyclerAdapter.submitList(resultList.toList())
 
-            binding.dpReplyEdt.setText("")
+                binding.dpReplyEdt.setText("")
+            }
 
         }
     }

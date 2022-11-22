@@ -4,8 +4,8 @@ import data.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface RetrofitService {
 
@@ -28,18 +28,19 @@ interface RetrofitService {
         @Body postData: PostData
     ) : Call<Posting>
 
+    // 게시물 수정
+    @PUT("project/write/modify/{post_id}")
+    fun requestRevise(
+        @Body postData: PostUpdateData
+    ) : Call<PostUpdate>
+
     // 댓글 작성
     @POST("/postReply/")
     fun requestReply(
         @Field("replyContent") replyContent : String
     ) : Call<Reply>
 
-    // 게시물 수정
-    @POST("/postRevise/")
-    fun requestRevise(
-        @Field("postTitle") postTitle : String,
-        @Field("postContent") postContent : String
-    ) : Call<PostModel>
+
 
 
 }

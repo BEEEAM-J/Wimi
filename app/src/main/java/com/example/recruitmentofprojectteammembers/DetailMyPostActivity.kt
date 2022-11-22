@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailMyPostBinding
 import data.PostModel
+import data.PostUpdate
+import data.PostUpdateData
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,13 +38,13 @@ class DetailMyPostActivity : AppCompatActivity() {
             postContent = bindng.dmpEdtContent.text.toString()
 
             // 변경된 내용을 서버로 전송
-//            retrofitService.requestRevise(postTitle, postContent).enqueue(object : Callback<PostModel>{
-//                override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+//            retrofitService.requestRevise(PostUpdateData(postTitle, postContent)).enqueue(object : Callback<PostUpdate>{
+//                override fun onResponse(call: Call<PostUpdate>, response: Response<PostUpdate>) {
 //                    Toast.makeText(this@DetailMyPostActivity, "게시물이 수정되었습니다.", Toast.LENGTH_SHORT).show()
 //                    finish()
 //                }
 //
-//                override fun onFailure(call: Call<PostModel>, t: Throwable) {
+//                override fun onFailure(call: Call<PostUpdate>, t: Throwable) {
 //                    TODO("Not yet implemented")
 //                }
 //
