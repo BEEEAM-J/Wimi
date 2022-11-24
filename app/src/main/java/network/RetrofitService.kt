@@ -2,10 +2,7 @@ package network
 
 import data.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.POST
-import retrofit2.http.PUT
+import retrofit2.http.*
 
 interface RetrofitService {
 
@@ -31,8 +28,15 @@ interface RetrofitService {
     // 게시물 수정
     @PUT("project/write/modify/{post_id}")
     fun requestRevise(
-        @Body postData: PostUpdateData
-    ) : Call<PostUpdate>
+        @Body postData: PostUpdateData,
+        @Path("post_id", encoded = true) postId : Int
+    ) : Call<Posting>
+
+    // 게시물 삭제
+    @DELETE("project/write/deletePost/{deletePostId}")
+    fun requestDelete(
+        @Path("deletePostId", encoded = true) deletePostID : Int
+    ) : Call<Posting>
 
     // 댓글 작성
     @POST("/postReply/")

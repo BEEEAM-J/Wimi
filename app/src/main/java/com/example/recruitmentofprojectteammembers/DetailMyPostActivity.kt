@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailMyPostBinding
-import data.PostModel
-import data.PostUpdate
-import data.PostUpdateData
+import data.Posting
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,14 +35,19 @@ class DetailMyPostActivity : AppCompatActivity() {
             postTitle = bindng.dmpEdtTitle.text.toString()
             postContent = bindng.dmpEdtContent.text.toString()
 
-            // 변경된 내용을 서버로 전송
-//            retrofitService.requestRevise(PostUpdateData(postTitle, postContent)).enqueue(object : Callback<PostUpdate>{
-//                override fun onResponse(call: Call<PostUpdate>, response: Response<PostUpdate>) {
-//                    Toast.makeText(this@DetailMyPostActivity, "게시물이 수정되었습니다.", Toast.LENGTH_SHORT).show()
-//                    finish()
+            // 변경된 내용을 서버로 전송 (post_id 변수 추가해야함)
+//            retrofitService.requestRevise(Posting(postTitle, postContent)).enqueue(object : Callback<Posting>{
+//                override fun onResponse(call: Call<Posting>, response: Response<Posting>) {
+//                    if(response.body() == Posting("success")){
+//                        Toast.makeText(this@DetailMyPostActivity, "게시물이 수정되었습니다.", Toast.LENGTH_SHORT).show()
+//                        finish()
+//                    }
+//                    else if (response.body() == Posting("error")){
+//                        Toast.makeText(this@DetailMyPostActivity, "다시 시도해보세요.", Toast.LENGTH_SHORT).show()
+//                    }
 //                }
 //
-//                override fun onFailure(call: Call<PostUpdate>, t: Throwable) {
+//                override fun onFailure(call: Call<Posting>, t: Throwable) {
 //                    TODO("Not yet implemented")
 //                }
 //
@@ -56,6 +59,25 @@ class DetailMyPostActivity : AppCompatActivity() {
 
         // 삭제 버튼 눌렀을 때
         bindng.dmpBtnRemove.setOnClickListener(){
+
+//            삭제할 post_id를 서버로 전송 (post_id 변수 추가해야함)
+//            retrofitService.requestDelete().enqueue(object : Callback<Posting>{
+//                override fun onResponse(call: Call<Posting>, response: Response<Posting>) {
+//                    if(response.body() == Posting("success")){
+//                        Toast.makeText(this@DetailMyPostActivity, "게시물이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//                        finish()
+//                    }
+//                    else if (response.body() == Posting("error")){
+//                        Toast.makeText(this@DetailMyPostActivity, "다시 시도해보세요", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<Posting>, t: Throwable) {
+//                    TODO("Not yet implemented")
+//                }
+//
+//            })
+
             Toast.makeText(this@DetailMyPostActivity, "게시물이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             finish()
         }
