@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recruitmentofprojectteammembers.databinding.PostTitleBinding
 import data.PostModel
+import data.PostModelItem
 
 
 class RecyclerAdapterMP : ListAdapter<PostModel, RecyclerAdapterMP.ViewHolder>(diffUtil){

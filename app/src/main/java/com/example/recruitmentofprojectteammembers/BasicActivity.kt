@@ -8,6 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityBasicBinding
 import data.PostModel
+import network.RetrofitClient.retrofitService
+import network.RetrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private lateinit var binding: ActivityBasicBinding
 
@@ -20,7 +25,6 @@ class BasicActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var postList = arrayListOf<PostModel>()
-
         var searchCont : String
 
         // 리사이클러뷰 역순 설정
@@ -35,6 +39,19 @@ class BasicActivity : AppCompatActivity() {
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.bsRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
+        // 전체 게시글 불러오기
+//        retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
+//            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+//                postList.addAll(response.body() as List<PostModel>)
+//                recyclerAdapter.submitList(postList.toList())
+//            }
+//
+//            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+
         // 게시물 등록시 해당 게시물의 제목 받아오기
         val startForResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -42,7 +59,7 @@ class BasicActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val postTitle = result.data?.getStringExtra("postTitle").toString()
                 val postContent = result.data?.getStringExtra("postContent").toString()
-                postList.add(PostModel(postTitle, postContent))
+                postList.add(PostModel(1, 1, postTitle, postContent))
                 recyclerAdapter.submitList(postList.toList())
             }
         }
@@ -60,6 +77,7 @@ class BasicActivity : AppCompatActivity() {
         binding.bsPostingBtn.setOnClickListener(){
 
             val intent = Intent(this, PostcontentActivity::class.java)
+//            startActivity(intent)
             startForResult.launch(intent)
 
         }

@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailPostBinding
-import data.Login
-import data.PostModel
-import data.Reply
+import data.*
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,17 +42,27 @@ class DetailPostActivity : AppCompatActivity() {
         binding.dpReplyBtn.setOnClickListener(){
             replyContent = binding.dpReplyEdt.text.toString()
 
-            // 레트로핏 이용 댓글 달기
-//            retrofitService.requestReply(replyContent).enqueue(object : Callback<Reply>{
-//                override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-//                    // 리사이클러뷰에 출력할 리스트를 어댑터로 전송
-//                    recyclerAdapter.submitList(getDPReplyItemList(replyContent))
+            //  댓글 달기
+//            retrofitService.requestReply(ReplyData(loginResponse.member_id, postid, replyContent)).enqueue(object : Callback<ResponseStatus>{
+//                override fun onResponse(call: Call<ResponseStatus>, response: Response<ResponseStatus>) {
+//
+//                    // 댓글 달기 성공한 경우
+//                    if(response.body() == ResponseStatus("success")){
+//                        // 댓글 리스트 받아오기
+//                        binding.dpReplyEdt.setText("")
+//                    }
+//                    else{
+//                        var dialog = AlertDialog.Builder(this@DetailPostActivity)
+//                        dialog.setTitle("오류")
+//                        dialog.setMessage("")
+//                        dialog.show()
+//                    }
 //                }
 //
-//                override fun onFailure(call: Call<Reply>, t: Throwable) {
+//                override fun onFailure(call: Call<ResponseStatus>, t: Throwable) {
 //                    var dialog = AlertDialog.Builder(this@DetailPostActivity)
-//                    dialog.setTitle("에러")
-//                    dialog.setMessage("다시 시도 해보세요")
+//                    dialog.setTitle("오류")
+//                    dialog.setMessage("")
 //                    dialog.show()
 //                }
 //

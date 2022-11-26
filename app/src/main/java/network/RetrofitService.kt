@@ -23,26 +23,31 @@ interface RetrofitService {
     @POST("project/write")
     fun requestPosting(
         @Body postData: PostData
-    ) : Call<Posting>
+    ) : Call<PostStatus>
 
     // 게시물 수정
     @PUT("project/write/modify/{post_id}")
     fun requestRevise(
         @Body postData: PostUpdateData,
         @Path("post_id", encoded = true) postId : Int
-    ) : Call<Posting>
+    ) : Call<ReviseStatus>
 
     // 게시물 삭제
     @DELETE("project/write/deletePost/{deletePostId}")
     fun requestDelete(
         @Path("deletePostId", encoded = true) deletePostID : Int
-    ) : Call<Posting>
+    ) : Call<DeleteStatus>
+
+    // 전체 게시글 불러오기
+    @GET("project/getPostList")
+    fun requestPostList() : Call<PostModel>
 
     // 댓글 작성
-    @POST("/postReply/")
+    @POST("project/comment/write/{post_id}")
     fun requestReply(
-        @Field("replyContent") replyContent : String
-    ) : Call<Reply>
+        @Body replyData: ReplyData,
+        @Path("post_id", encoded = true) postId: Int
+    ) : Call<CommentPostStatus>
 
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityMypostBinding
 import data.PostModel
+import data.PostModelItem
 
 private lateinit var binding : ActivityMypostBinding
 
@@ -33,7 +34,7 @@ class MypostActivity : AppCompatActivity() {
             val title = "제목: ${cnt}"
             val content = "내용: ${cnt}"
 
-            val product = PostModel(title, content)
+            val product = PostModel(1, 1, title, content)
             resultList.add(product)
         }
         return resultList

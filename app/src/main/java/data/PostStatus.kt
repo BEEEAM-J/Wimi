@@ -1,5 +1,5 @@
 package data
 
-data class Posting (
+data class PostStatus(
     var post_status : String
 )

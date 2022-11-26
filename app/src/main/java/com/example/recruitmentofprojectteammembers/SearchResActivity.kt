@@ -34,7 +34,7 @@ class SearchResActivity : AppCompatActivity() {
             val title = "제목: ${cnt}"
             val content = "내용: ${cnt}"
 
-            val product = PostModel(title, content)
+            val product = PostModel(1, 1, title, content)
             resultList.add(product)
         }
         return resultList

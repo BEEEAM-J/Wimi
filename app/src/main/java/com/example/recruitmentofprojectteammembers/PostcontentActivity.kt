@@ -4,13 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.recruitmentofprojectteammembers.databinding.ActivityPostcontentBinding
 import data.PostData
-import data.PostModel
-import data.Posting
+import data.PostStatus
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,11 +48,11 @@ class PostcontentActivity : AppCompatActivity() {
             }
             else {
                 // 서버와 통신하여 게시물 등록
-                retrofitService.requestPosting(PostData(loginResponse.member_id, postTitle, postContent)).enqueue(object : Callback<Posting>{
-                    override fun onResponse(call: Call<Posting>, response: Response<Posting>) {
+                retrofitService.requestPosting(PostData(loginResponse.member_id, postTitle, postContent)).enqueue(object : Callback<PostStatus>{
+                    override fun onResponse(call: Call<PostStatus>, response: Response<PostStatus>) {
 //                    정상적으로 등록된 경우
 
-                        if (response.body() == Posting("success")){
+                        if (response.body() == PostStatus("success")){
                             Toast.makeText(this@PostcontentActivity, "게시물 등록 완료!", Toast.LENGTH_SHORT).show()
                             val returnIntent = Intent()
                             returnIntent.putExtra("postTitle", postTitle)
@@ -63,7 +61,7 @@ class PostcontentActivity : AppCompatActivity() {
                             finish()
                         }
 //                    오류가 발생한 경우
-                        else if (response.body() == Posting("error")){
+                        else if (response.body() == PostStatus("error")){
                             var dialog = AlertDialog.Builder(this@PostcontentActivity)
                             dialog.setTitle("다시 시도해주세요.")
                             dialog.setMessage("")
@@ -71,7 +69,7 @@ class PostcontentActivity : AppCompatActivity() {
                         }
                     }
 
-                    override fun onFailure(call: Call<Posting>, t: Throwable) {
+                    override fun onFailure(call: Call<PostStatus>, t: Throwable) {
                         Toast.makeText(this@PostcontentActivity, "에러! 다시 시도 ㄱㄱ", Toast.LENGTH_SHORT).show()
                     }
 
