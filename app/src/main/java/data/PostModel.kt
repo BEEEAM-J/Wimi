@@ -10,6 +10,6 @@ package data
 data class PostModel(
     var post_id: Int,
     var create_member_id: Int,
-    var content: String,
-    var title: String
+    var title: String,
+    var content: String
 )

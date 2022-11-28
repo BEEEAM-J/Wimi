@@ -27,6 +27,7 @@ class SearchResActivity : AppCompatActivity() {
         recyclerAdapter.submitList(getBSPostItemList())
     }
 
+    // 예시 데이터
     private fun getBSPostItemList(): ArrayList<PostModel>{
         var resultList = arrayListOf<PostModel>()
         var cnt = 0

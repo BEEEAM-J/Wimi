@@ -6,3 +6,5 @@ data class Reply(
     var content : String
 
 )
+
+//class Reply : ArrayList<ReplyItem>()

@@ -43,12 +43,23 @@ class DetailPostActivity : AppCompatActivity() {
             replyContent = binding.dpReplyEdt.text.toString()
 
             //  댓글 달기
-//            retrofitService.requestReply(ReplyData(loginResponse.member_id, postid, replyContent)).enqueue(object : Callback<ResponseStatus>{
-//                override fun onResponse(call: Call<ResponseStatus>, response: Response<ResponseStatus>) {
+//            retrofitService.requestReply(ReplyData(loginResponse.member_id, /* 게시물 아이디 postid */ , replyContent)).enqueue(object : Callback<CommentPostStatus>{
+//                override fun onResponse(call: Call<CommentPostStatus>, response: Response<CommentPostStatus>) {
 //
 //                    // 댓글 달기 성공한 경우
-//                    if(response.body() == ResponseStatus("success")){
+//                    if(response.body() == CommentPostStatus("success")){
 //                        // 댓글 리스트 받아오기
+//                        retrofitService.requestReplyList( /* 게시물 아이디 */).enqueue(object : Callback<Reply>{
+//                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+//                                resultList.addAll(response.body() as List<Reply>)
+//                                recyclerAdapter.submitList(resultList.toList())
+//                            }
+//
+//                            override fun onFailure(call: Call<Reply>, t: Throwable) {
+//                                TODO("Not yet implemented")
+//                            }
+//
+//                        })
 //                        binding.dpReplyEdt.setText("")
 //                    }
 //                    else{
@@ -59,7 +70,7 @@ class DetailPostActivity : AppCompatActivity() {
 //                    }
 //                }
 //
-//                override fun onFailure(call: Call<ResponseStatus>, t: Throwable) {
+//                override fun onFailure(call: Call<CommentPostStatus>, t: Throwable) {
 //                    var dialog = AlertDialog.Builder(this@DetailPostActivity)
 //                    dialog.setTitle("오류")
 //                    dialog.setMessage("")
