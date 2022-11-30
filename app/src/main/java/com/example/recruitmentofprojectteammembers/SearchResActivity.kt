@@ -24,20 +24,20 @@ class SearchResActivity : AppCompatActivity() {
         binding.srRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
         // 리사이클러뷰에 출력할 리스트를 어댑터로 전송
-        recyclerAdapter.submitList(getBSPostItemList())
+//        recyclerAdapter.submitList(getBSPostItemList())
     }
 
     // 예시 데이터
-    private fun getBSPostItemList(): ArrayList<PostModel>{
-        var resultList = arrayListOf<PostModel>()
-        var cnt = 0
-        while (cnt++ < 30) {
-            val title = "제목: ${cnt}"
-            val content = "내용: ${cnt}"
-
-            val product = PostModel(1, 1, title, content)
-            resultList.add(product)
-        }
-        return resultList
-    }
+//    private fun getBSPostItemList(): ArrayList<PostModel>{
+//        var resultList = arrayListOf<PostModel>()
+//        var cnt = 0
+//        while (cnt++ < 30) {
+//            val title = "제목: ${cnt}"
+//            val content = "내용: ${cnt}"
+//
+//            val product = PostModel(1, 1, title, content)
+//            resultList.add(product)
+//        }
+//        return resultList
+//    }
 }

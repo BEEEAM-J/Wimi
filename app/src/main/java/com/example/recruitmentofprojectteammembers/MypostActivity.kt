@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityMypostBinding
 import data.PostModel
-import data.PostModelItem
 
 private lateinit var binding : ActivityMypostBinding
 
@@ -24,19 +23,19 @@ class MypostActivity : AppCompatActivity() {
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
-        recycleradapter.submitList(getMPPostItemList())
+//        recycleradapter.submitList(getMPPostItemList())
     }
 
-    private fun getMPPostItemList(): ArrayList<PostModel>{
-        var resultList = arrayListOf<PostModel>()
-        var cnt = 0
-        while (cnt++ < 100) {
-            val title = "제목: ${cnt}"
-            val content = "내용: ${cnt}"
-
-            val product = PostModel(1, 1, title, content)
-            resultList.add(product)
-        }
-        return resultList
-    }
+//    private fun getMPPostItemList(): ArrayList<PostModel>{
+//        var resultList = arrayListOf<PostModel>()
+//        var cnt = 0
+//        while (cnt++ < 100) {
+//            val title = "제목: ${cnt}"
+//            val content = "내용: ${cnt}"
+//
+//            val product = PostModel(1, 1, title, content)
+//            resultList.add(product)
+//        }
+//        return resultList
+//    }
 }

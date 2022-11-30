@@ -52,7 +52,7 @@ interface RetrofitService {
     // 게시물의 전체 댓글 불러오기
     @GET("project/comment/getCommentList/{post_id}")
     fun requestReplyList(
-        @Path("post_id", encoded = true) postId : Int
+        @Path("post_id", encoded = true) postId : String
     ) : Call<Reply>
 
 

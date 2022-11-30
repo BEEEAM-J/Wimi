@@ -1,15 +1,11 @@
 package data
 
-//class PostModel : ArrayList<PostModelItem>(
+class PostModel : ArrayList<PostModelItem>()
+
+
+//data class PostModel(
 //    var post_id: Int,
 //    var create_member_id: Int,
-//    var content: String,
-//    var title: String
+//    var title: String,
+//    var content: String
 //)
-
-data class PostModel(
-    var post_id: Int,
-    var create_member_id: Int,
-    var title: String,
-    var content: String
-)

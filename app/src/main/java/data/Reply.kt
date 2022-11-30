@@ -1,10 +1,10 @@
 package data
 
-data class Reply(
+//data class Reply(
+//
+//    var name : String,
+//    var content : String
+//
+//)
 
-    var name : String,
-    var content : String
-
-)
-
-//class Reply : ArrayList<ReplyItem>()
+class Reply : ArrayList<ReplyItem>()
