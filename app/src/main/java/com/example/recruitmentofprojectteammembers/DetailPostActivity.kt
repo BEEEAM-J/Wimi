@@ -23,16 +23,20 @@ class DetailPostActivity : AppCompatActivity() {
 
         var postTitle = intent.getStringExtra("title")
         var postContent = intent.getStringExtra("content")
-        var postId = intent.getStringExtra("post_id")
+        var postId = intent.getIntExtra("post_id", -1)
+        var usrId = intent.getIntExtra("create_member_id", -1)
 
         var replyContent : String
 
+        // 댓글 리스트 초기화 하기
+        resultList.clear()
 
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.dpTitle.text = postTitle
         binding.dpContent.text = postContent
+        binding.dpTvusrname.text = "개발자 ${usrId}"
 
         // 리사이클러뷰 어댑터 선언
         binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
@@ -44,12 +48,12 @@ class DetailPostActivity : AppCompatActivity() {
         Log.d("tag113", "댓글 동작 확인")
         Log.d("tag113", postId.toString())
 
-        // 댓글 리스트 받아오기
+        // 처음에 댓글 리스트 받아오기
         if (postId != null) {
             retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
                 override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
                     response.body()?.let { resultList.addAll(it) }
-                    recyclerAdapter.submitList(resultList)
+                    recyclerAdapter.submitList(resultList.toList())
                 }
 
                 override fun onFailure(call: Call<Reply>, t: Throwable) {
@@ -73,41 +77,39 @@ class DetailPostActivity : AppCompatActivity() {
             else{
 
                 //  댓글 달기
-//            retrofitService.requestReply(ReplyData(loginResponse.member_id, /* 게시물 아이디 postid */ , replyContent)).enqueue(object : Callback<CommentPostStatus>{
-//                override fun onResponse(call: Call<CommentPostStatus>, response: Response<CommentPostStatus>) {
-//
-//                    // 댓글 달기 성공한 경우
-//                    if(response.body() == CommentPostStatus("success")){
-//                        // 댓글 리스트 받아오기
-//                        retrofitService.requestReplyList( /* 게시물 아이디 */).enqueue(object : Callback<Reply>{
-//                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-//                                resultList.addAll(response.body() as List<Reply>)
-//                                recyclerAdapter.submitList(resultList.toList())
-//                            }
-//
-//                            override fun onFailure(call: Call<Reply>, t: Throwable) {
-//                                TODO("Not yet implemented")
-//                            }
-//
-//                        })
-//                        binding.dpReplyEdt.setText("")
-//                    }
-//                    else{
-//                        var dialog = AlertDialog.Builder(this@DetailPostActivity)
-//                        dialog.setTitle("오류")
-//                        dialog.setMessage("")
-//                        dialog.show()
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<CommentPostStatus>, t: Throwable) {
-//                    var dialog = AlertDialog.Builder(this@DetailPostActivity)
-//                    dialog.setTitle("오류")
-//                    dialog.setMessage("")
-//                    dialog.show()
-//                }
-//
-//            })
+                if(postId != null){
+                    retrofitService.requestReply(ReplyData(loginResponse.member_id, postId, replyContent), postId).enqueue(object : Callback<CommentPostStatus> {
+                        override fun onResponse(call: Call<CommentPostStatus>, response: Response<CommentPostStatus>, ) {
+
+                            // 댓글 달기 성공한 경우
+                            if (response.body() == CommentPostStatus("success")) {
+                                // 댓글 리스트 초기화 하기
+                                resultList.clear()
+
+                                // 댓글 리스트 받아오기
+                                retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
+                                    override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+                                        response.body()?.let { resultList.addAll(it) }
+                                        recyclerAdapter.submitList(resultList.toList())
+                                    }
+
+                                    override fun onFailure(call: Call<Reply>, t: Throwable) {
+                                        Log.d("empty", "Empty")
+                                    }
+
+                                })
+                                binding.dpReplyEdt.setText("")
+                            } else {
+                                printErrorMsg()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<CommentPostStatus>, t: Throwable) {
+                            printErrorMsg()
+                        }
+
+                    })
+                }
                 // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
 //                resultList.add(Reply(loginResponse.member_name,replyContent))
 //                recyclerAdapter.submitList(resultList.toList())
@@ -116,6 +118,13 @@ class DetailPostActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun printErrorMsg(){
+        var dialog = AlertDialog.Builder(this@DetailPostActivity)
+        dialog.setTitle("오류")
+        dialog.setMessage("")
+        dialog.show()
     }
 
 }

@@ -21,11 +21,10 @@ class BasicActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic)
 
+        var searchCont : String
+
         binding = ActivityBasicBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-//        var postList = arrayListOf<PostModel>()
-        var searchCont : String
 
         // 리사이클러뷰 역순 설정
         val manager = LinearLayoutManager(this@BasicActivity)
@@ -45,7 +44,7 @@ class BasicActivity : AppCompatActivity() {
                 response.body()?.let { postList.addAll(it) }
 //                response.body()?.javaClass?.let { Log.d("tag", it.name) }
                 Log.d("tag112", postList.toString())
-                recyclerAdapter.submitList(postList)
+                recyclerAdapter.submitList(postList.toList())
             }
 
             override fun onFailure(call: Call<PostModel>, t: Throwable) {
@@ -65,7 +64,6 @@ class BasicActivity : AppCompatActivity() {
 //                recyclerAdapter.submitList(postList.toList())
 //            }
 //        }
-
 
         // 내가 쓴 글 버튼 클릭 동작
         binding.bsCheckMyPost.setOnClickListener(){
@@ -94,6 +92,57 @@ class BasicActivity : AppCompatActivity() {
 
         }
 
+
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        setContentView(R.layout.activity_basic)
+//
+//        var searchCont : String
+//
+//        // 전체 게시물 불러오기
+//       retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
+//            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+//                response.body()?.let { postList.addAll(it) }
+////                response.body()?.javaClass?.let { Log.d("tag", it.name) }
+//                Log.d("tag112", postList.toString())
+//                val recyclerAdapter = RecyclerAdapterBS()
+//                recyclerAdapter.submitList(postList.toList())
+//            }
+//
+//            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//
+//        // 내가 쓴 글 버튼 클릭 동작
+//        binding.bsCheckMyPost.setOnClickListener(){
+//
+//            val intent = Intent(this, MypostActivity::class.java)
+//            startActivity(intent)
+//
+//        }
+//
+//        // + 버튼 클릭 동작
+//        binding.bsPostingBtn.setOnClickListener(){
+//
+//            val intent = Intent(this, PostcontentActivity::class.java)
+//            startActivity(intent)
+////            startForResult.launch(intent)
+//
+//        }
+//
+//        // 검색 버튼 클릭 동작
+//        binding.bsSearchBtn.setOnClickListener(){
+//
+//            searchCont = binding.bsSearchEdt.text.toString()
+//            val intent = Intent(this, SearchResActivity::class.java)
+//            intent.putExtra("search", searchCont)
+//            startActivity(intent)
+//
+//        }
+//    }
 
 }

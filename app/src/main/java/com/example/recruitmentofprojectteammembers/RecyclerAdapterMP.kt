@@ -11,14 +11,14 @@ import data.PostModel
 import data.PostModelItem
 
 
-class RecyclerAdapterMP : ListAdapter<PostModel, RecyclerAdapterMP.ViewHolder>(diffUtil){
+class RecyclerAdapterMP : ListAdapter<PostModelItem, RecyclerAdapterMP.ViewHolder>(diffUtil){
 
     inner class ViewHolder(var binding: PostTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val context = binding.root.context
 
-        fun bind(item: PostModel) {
+        fun bind(item: PostModelItem) {
             binding.apply {
                 postTitle.text = item.title
                 postContent.text = item.content
@@ -44,15 +44,15 @@ class RecyclerAdapterMP : ListAdapter<PostModel, RecyclerAdapterMP.ViewHolder>(d
 
     companion object {
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
-        val diffUtil = object : DiffUtil.ItemCallback<PostModel>() {
+        val diffUtil = object : DiffUtil.ItemCallback<PostModelItem>() {
 
             //            두 아이템이 동일한 아이템인지 확인
-            override fun areItemsTheSame(oldItem: PostModel, newItem: PostModel): Boolean {
-                return oldItem.title == newItem.title
+            override fun areItemsTheSame(oldItem: PostModelItem, newItem: PostModelItem): Boolean {
+                return oldItem == newItem
             }
 
             //            두 아이템이 동일한 내용을 가지고 있는지 확인
-            override fun areContentsTheSame(oldItem: PostModel, newItem: PostModel): Boolean {
+            override fun areContentsTheSame(oldItem: PostModelItem, newItem: PostModelItem): Boolean {
                 return oldItem == newItem
             }
         }

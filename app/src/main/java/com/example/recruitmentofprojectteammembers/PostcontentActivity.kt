@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.recruitmentofprojectteammembers.databinding.ActivityPostcontentBinding
 import data.PostData
+import data.PostModel
 import data.PostStatus
 import network.RetrofitClient.retrofitService
 import retrofit2.Call

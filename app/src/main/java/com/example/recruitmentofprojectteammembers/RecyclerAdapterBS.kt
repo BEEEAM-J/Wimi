@@ -34,7 +34,8 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
                 val intent = Intent(context, DetailPostActivity::class.java)
                 intent.putExtra("title", item.title)
                 intent.putExtra("content", item.content)
-                intent.putExtra("post_id", item.post_id.toString())
+                intent.putExtra("post_id", item.post_id)
+                intent.putExtra("create_member_id", item.create_member_id)
                 Log.d("포스트 아이디 확인", item.post_id.toString())
                 intent.run { context.startActivity(this) }
             }

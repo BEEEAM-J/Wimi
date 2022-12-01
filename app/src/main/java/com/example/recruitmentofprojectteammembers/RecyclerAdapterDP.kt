@@ -19,7 +19,7 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
 
         fun bind(item: ReplyItem) {
             binding.apply {
-                replyName.text = item.comment_member_id.toString()
+                replyName.text = "개발자 ${item.comment_member_id.toString()}"
                 replyContent.text = item.comment
             }
         }
