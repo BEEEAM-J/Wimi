@@ -23,11 +23,6 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
             binding.apply {
                 postTitle.text = item.title
                 postContent.text = item.content
-//                for(i in 0.. 3){
-//                    postTitle.text = item[i].title
-//                    postContent.text = item[i].content
-//                    Log.d("tag111", "for문 돈다!!!")
-//                }
             }
             // 리사이클러뷰 아이템 클릭 이벤트 설정
             itemView.setOnClickListener(){

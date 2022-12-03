@@ -42,6 +42,12 @@ interface RetrofitService {
     @GET("project/getPostList")
     fun requestPostList() : Call<PostModel>
 
+    // 게시물 검색
+    @GET("project/post/search/{title}")
+    fun requestSearch(
+        @Path("title", encoded = true) Title : String
+    ) : Call<SrhPostModel>
+
     // 댓글 작성
     @POST("project/comment/write/{post_id}")
     fun requestReply(
