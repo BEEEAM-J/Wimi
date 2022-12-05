@@ -61,6 +61,13 @@ interface RetrofitService {
         @Path("post_id", encoded = true) postId : Int
     ) : Call<Reply>
 
+    // 댓글 수정
+    @POST("project/comment/update/{comment_id}")
+    fun requestReplyRevise(
+        @Body replyReviseData: ReplyReviseData,
+        @Path("comment_id", encoded = true) commentId : Int
+    ) : Call<ReplyUpdateStatus>
+
 
 
 }

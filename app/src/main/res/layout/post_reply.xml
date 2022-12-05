@@ -10,8 +10,9 @@
 
     <LinearLayout
         android:id="@+id/replyTopLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -31,8 +32,35 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="10dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/replyRevise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정"
+            android:textSize="12sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/replyDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:textSize="12sp"
+            android:layout_marginStart="5dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
     <TextView
-        android:id="@+id/replyContent"
+        android:id="@+id/replyContentTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="내용 ㅋㅋ"
@@ -41,4 +69,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"/>
+
+    <EditText
+        android:id="@+id/replyContentEdt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="내용 ㅋㅋ"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/replyTopLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edt_custom"
+        android:visibility="gone"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
