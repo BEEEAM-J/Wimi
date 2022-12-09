@@ -1,3 +1,3 @@
 package data
 
-class SrhPostModel : ArrayList<PostModelItem>()
+class SrhPostModel : ArrayList<SrhPostModelItem>()

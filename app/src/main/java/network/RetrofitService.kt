@@ -39,14 +39,26 @@ interface RetrofitService {
     ) : Call<DeleteStatus>
 
     // 전체 게시글 불러오기
-    @GET("project/getPostList")
+    @GET("project/post/getAllPostList")
     fun requestPostList() : Call<PostModel>
+
+    // 게시물 상세정보
+    @GET("project/post/getPostDetail/{post_id}")
+    fun requestDetailPost(
+        @Path("post_id", encoded = true) postId: Int
+    ):Call<SrhPostModelItem>
 
     // 게시물 검색
     @GET("project/post/search/{title}")
     fun requestSearch(
         @Path("title", encoded = true) Title : String
     ) : Call<SrhPostModel>
+
+    // 내가 쓴 글 목록
+    @GET("getMembersPostList/{member_id}")
+    fun requestMyPost(
+        @Path("member_id", encoded = true) memberId: Int
+    ) : Call<PostModel>
 
     // 댓글 작성
     @POST("project/comment/write/{post_id}")

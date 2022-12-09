@@ -33,19 +33,20 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/reviseLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginEnd="10dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/replyRevise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="수정"
-            android:textSize="12sp"
-            android:visibility="gone"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/replyDelete"
@@ -53,8 +54,33 @@
             android:layout_height="wrap_content"
             android:text="삭제"
             android:textSize="12sp"
-            android:layout_marginStart="5dp"
-            android:visibility="gone"/>
+            android:layout_marginStart="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/OkLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="10dp"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/replyReviseOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/replyReviseCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="12sp"
+            android:layout_marginStart="5dp" />
 
     </LinearLayout>
 

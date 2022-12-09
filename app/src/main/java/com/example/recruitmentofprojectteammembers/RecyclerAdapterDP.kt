@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -26,46 +25,69 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                 replyContentTv.text = item.comment
                 replyContentEdt.setText(item.comment)
 
+                val recyclerAdapter = RecyclerAdapterDP()
+
                 if(loginResponse.member_id == item.comment_member_id){
 
-                    replyRevise.visibility = View.VISIBLE
-                    replyDelete.visibility = View.VISIBLE
+                    reviseLayout.visibility = View.VISIBLE
 
                     // 댓글 수정 버튼이 눌린 경우
                     replyRevise.setOnClickListener(){
                         replyContentTv.visibility = View.INVISIBLE
                         replyContentEdt.visibility = View.VISIBLE
-                        replyRevise.text = "확인"
-                        replyDelete.text = "취소"
 
-                        // 댓글 수정 확인 클릭한 경우
-                        replyRevise.setOnClickListener(){
-                            retrofitService.requestReplyRevise(ReplyReviseData(replyContentEdt.text.toString()), item.comment_id).enqueue(object : Callback<ReplyUpdateStatus>{
-                                override fun onResponse(call: Call<ReplyUpdateStatus>, response: Response<ReplyUpdateStatus>, ) {
-                                    // 수정이 성공적으로 된 경우
-                                    if (response.body() == ReplyUpdateStatus("success")){
-                                        replyContentTv.visibility = View.VISIBLE
-                                        replyContentEdt.visibility = View.INVISIBLE
+                        OkLayout.visibility = View.VISIBLE
+                        reviseLayout.visibility = View.INVISIBLE
 
-                                        replyRevise.text = "수정"
-                                        replyDelete.text = "삭제"
+                        Log.d("ReviseTag", "수정버튼 눌림")
+                    }
+
+                    // 댓글 수정 확인 클릭한 경우
+                    replyReviseOk.setOnClickListener(){
+                        retrofitService.requestReplyRevise(ReplyReviseData(replyContentEdt.text.toString()), item.comment_id).enqueue(object : Callback<ReplyUpdateStatus>{
+                            override fun onResponse(call: Call<ReplyUpdateStatus>, response: Response<ReplyUpdateStatus>, ) {
+                                // 수정이 성공적으로 된 경우
+                                if (response.body() == ReplyUpdateStatus("success")){
+                                    replyContentTv.visibility = View.VISIBLE
+                                    replyContentEdt.visibility = View.INVISIBLE
+
+                                    OkLayout.visibility = View.INVISIBLE
+                                    reviseLayout.visibility = View.VISIBLE
+
+                                    // 업데이트된 댓글 리스트 받아오고, 출력
+                                    resultList.clear()
+
+                                    if (postId != null) {
+                                        retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
+                                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+                                                response.body()?.let { resultList.addAll(it) }
+                                                recyclerAdapter.submitList(resultList.toList())
+                                            }
+
+                                            override fun onFailure(call: Call<Reply>, t: Throwable) {
+                                                Log.d("empty", "Empty")
+                                            }
+
+                                        })
                                     }
                                 }
+                            }
 
-                                override fun onFailure(call: Call<ReplyUpdateStatus>, t: Throwable, ) {
-                                    TODO("Not yet implemented")
-                                }
-                            })
-                        }
+                            override fun onFailure(call: Call<ReplyUpdateStatus>, t: Throwable, ) {
+                                TODO("Not yet implemented")
+                            }
+                        })
+                    }
 
-                        // 취소를 누른 경우
-                        replyDelete.setOnClickListener(){
-                            replyContentTv.visibility = View.VISIBLE
-                            replyContentEdt.visibility = View.INVISIBLE
+                    // 취소를 누른 경우
+                    replyReviseCancel.setOnClickListener(){
+                        replyContentTv.visibility = View.VISIBLE
+                        replyContentEdt.visibility = View.INVISIBLE
 
-                            replyRevise.text = "수정"
-                            replyDelete.text = "삭제"
-                        }
+                        Log.d("CancelTag", "취소버튼 눌림")
+
+                        OkLayout.visibility = View.INVISIBLE
+                        reviseLayout.visibility = View.VISIBLE
                     }
                 }
             }

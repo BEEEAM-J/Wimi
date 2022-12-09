@@ -14,6 +14,7 @@ import retrofit2.Response
 
 private lateinit var binding: ActivityDetailPostBinding
 var resultList : Reply = Reply()
+var postId : Int = 0
 
 class DetailPostActivity : AppCompatActivity() {
 
@@ -22,8 +23,7 @@ class DetailPostActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail_post)
 
         var postTitle = intent.getStringExtra("title")
-        var postContent = intent.getStringExtra("content")
-        var postId = intent.getIntExtra("post_id", -1)
+        postId = intent.getIntExtra("post_id", -1)
         var usrId = intent.getIntExtra("create_member_id", -1)
 
         var replyContent : String
@@ -34,16 +34,30 @@ class DetailPostActivity : AppCompatActivity() {
         binding = ActivityDetailPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.dpTitle.text = postTitle
-        binding.dpContent.text = postContent
-        binding.dpTvusrname.text = "개발자 ${usrId}"
-
         // 리사이클러뷰 어댑터 선언
         binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
         val recyclerAdapter = RecyclerAdapterDP()
         binding.dpReplyRecycler.adapter = recyclerAdapter
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.dpReplyRecycler.addItemDecoration(recyclerDecoration(40))
+
+        // 게시물 상세정보 불러오기
+        retrofitService.requestDetailPost(postId).enqueue(object : Callback<SrhPostModelItem>{
+            override fun onResponse(call: Call<SrhPostModelItem>, response: Response<SrhPostModelItem>) {
+                var detailPost : SrhPostModelItem? = response.body()
+                if (detailPost != null) {
+                    binding.dpContent.text = detailPost.content
+                }
+            }
+
+            override fun onFailure(call: Call<SrhPostModelItem>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+
+        binding.dpTvusrname.text = "개발자 ${usrId}"
 
         Log.d("tag113", "댓글 동작 확인")
         Log.d("tag113", postId.toString())

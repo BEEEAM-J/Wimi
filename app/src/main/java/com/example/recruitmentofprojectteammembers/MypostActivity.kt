@@ -2,11 +2,17 @@ package com.example.recruitmentofprojectteammembers
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityMypostBinding
 import data.PostModel
+import network.RetrofitClient.retrofitService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private lateinit var binding : ActivityMypostBinding
+var MyPostList : PostModel = PostModel()
 
 class MypostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,24 +24,26 @@ class MypostActivity : AppCompatActivity() {
 
         // 리사이클러뷰 어댑터 선언
         binding.mpRecyclerPost.layoutManager = LinearLayoutManager(this@MypostActivity)
-        val recycleradapter = RecyclerAdapterMP()
-        binding.mpRecyclerPost.adapter = recycleradapter
+        val recyclerAdapter = RecyclerAdapterMP()
+        binding.mpRecyclerPost.adapter = recyclerAdapter
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
-//        recycleradapter.submitList(getMPPostItemList())
+
+        retrofitService.requestMyPost(loginResponse.member_id).enqueue(object : Callback<PostModel>{
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                response.body()?.let { MyPostList.addAll(it) }
+//                response.body()?.javaClass?.let { Log.d("tag", it.name) }
+                Log.d("tag112", MyPostList.toString())
+                recyclerAdapter.submitList(MyPostList.toList())
+            }
+
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
-//    private fun getMPPostItemList(): ArrayList<PostModel>{
-//        var resultList = arrayListOf<PostModel>()
-//        var cnt = 0
-//        while (cnt++ < 100) {
-//            val title = "제목: ${cnt}"
-//            val content = "내용: ${cnt}"
-//
-//            val product = PostModel(1, 1, title, content)
-//            resultList.add(product)
-//        }
-//        return resultList
-//    }
+
 }

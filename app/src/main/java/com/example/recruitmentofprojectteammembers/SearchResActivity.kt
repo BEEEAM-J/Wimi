@@ -31,7 +31,7 @@ class SearchResActivity : AppCompatActivity() {
 
         // 리사이클러뷰 어댑터 선언
         binding.srRecyclerPost.layoutManager = LinearLayoutManager(this@SearchResActivity)
-        val recyclerAdapter = RecyclerAdapterBS()
+        val recyclerAdapter = RecyclerAdapterSR()
         binding.srRecyclerPost.adapter = recyclerAdapter
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.srRecyclerPost.addItemDecoration(recyclerDecoration(40))

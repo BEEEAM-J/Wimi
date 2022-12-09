@@ -22,13 +22,11 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
         fun bind(item: PostModelItem) {
             binding.apply {
                 postTitle.text = item.title
-                postContent.text = item.content
             }
             // 리사이클러뷰 아이템 클릭 이벤트 설정
             itemView.setOnClickListener(){
                 val intent = Intent(context, DetailPostActivity::class.java)
                 intent.putExtra("title", item.title)
-                intent.putExtra("content", item.content)
                 intent.putExtra("post_id", item.post_id)
                 intent.putExtra("create_member_id", item.create_member_id)
                 Log.d("포스트 아이디 확인", item.post_id.toString())
