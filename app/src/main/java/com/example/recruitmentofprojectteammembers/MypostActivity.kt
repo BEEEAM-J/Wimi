@@ -30,6 +30,8 @@ class MypostActivity : AppCompatActivity() {
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
 
+        // 내가 쓴 글 불러오기
+        MyPostList.clear()
         retrofitService.requestMyPost(loginResponse.member_id).enqueue(object : Callback<PostModel>{
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
                 response.body()?.let { MyPostList.addAll(it) }

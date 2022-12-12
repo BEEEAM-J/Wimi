@@ -22,6 +22,7 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
         fun bind(item: PostModelItem) {
             binding.apply {
                 postTitle.text = item.title
+                postCreateMem.text = "개발자 ${item.create_member_id}"
             }
             // 리사이클러뷰 아이템 클릭 이벤트 설정
             itemView.setOnClickListener(){

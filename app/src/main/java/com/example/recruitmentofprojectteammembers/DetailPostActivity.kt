@@ -47,6 +47,8 @@ class DetailPostActivity : AppCompatActivity() {
                 var detailPost : SrhPostModelItem? = response.body()
                 if (detailPost != null) {
                     binding.dpContent.text = detailPost.content
+                    binding.dpTitle.text = postTitle
+
                 }
             }
 
@@ -64,17 +66,7 @@ class DetailPostActivity : AppCompatActivity() {
 
         // 처음에 댓글 리스트 받아오기
         if (postId != null) {
-            retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
-                override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-                    response.body()?.let { resultList.addAll(it) }
-                    recyclerAdapter.submitList(resultList.toList())
-                }
-
-                override fun onFailure(call: Call<Reply>, t: Throwable) {
-                    Log.d("empty", "Empty")
-                }
-
-            })
+            renewReply()
         }
 
 //        댓글 등록 버튼 클릭한 경우
@@ -101,17 +93,7 @@ class DetailPostActivity : AppCompatActivity() {
                                 resultList.clear()
 
                                 // 댓글 리스트 받아오기
-                                retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
-                                    override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-                                        response.body()?.let { resultList.addAll(it) }
-                                        recyclerAdapter.submitList(resultList.toList())
-                                    }
-
-                                    override fun onFailure(call: Call<Reply>, t: Throwable) {
-                                        Log.d("empty", "Empty")
-                                    }
-
-                                })
+                                renewReply()
                                 binding.dpReplyEdt.setText("")
                             } else {
                                 printErrorMsg()
@@ -134,11 +116,35 @@ class DetailPostActivity : AppCompatActivity() {
         }
     }
 
+//    override fun onStop() {
+//        super.onStop()
+//        renewReply()
+//    }
+
     fun printErrorMsg(){
         var dialog = AlertDialog.Builder(this@DetailPostActivity)
         dialog.setTitle("오류")
         dialog.setMessage("")
         dialog.show()
+    }
+
+    fun renewReply(){
+        // 리사이클러뷰 어댑터 선언
+        binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
+        val recyclerAdapter = RecyclerAdapterDP()
+        binding.dpReplyRecycler.adapter = recyclerAdapter
+
+        retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
+            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+                response.body()?.let { resultList.addAll(it) }
+                recyclerAdapter.submitList(resultList.toList())
+            }
+
+            override fun onFailure(call: Call<Reply>, t: Throwable) {
+                Log.d("empty", "Empty")
+            }
+
+        })
     }
 
 }

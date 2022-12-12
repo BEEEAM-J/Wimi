@@ -5,14 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailPostBinding
 import com.example.recruitmentofprojectteammembers.databinding.PostReplyBinding
 import data.*
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.recruitmentofprojectteammembers.DetailPostActivity as DetailPostActivity1
+
+private lateinit var binding1: ActivityDetailPostBinding
 
 class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(diffUtil){
 
@@ -25,7 +30,12 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                 replyContentTv.text = item.comment
                 replyContentEdt.setText(item.comment)
 
-                val recyclerAdapter = RecyclerAdapterDP()
+//                binding1 = ActivityDetailPostBinding.inflate(layoutInflater)
+//
+//                // 리사이클러뷰 어댑터 선언
+//                binding1.dpReplyRecycler.layoutManager = LinearLayoutManager(DetailPostActivity1)
+//                val recyclerAdapter = RecyclerAdapterDP()
+//                binding1.dpReplyRecycler.adapter = recyclerAdapter
 
                 if(loginResponse.member_id == item.comment_member_id){
 
@@ -42,6 +52,17 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                         Log.d("ReviseTag", "수정버튼 눌림")
                     }
 
+                    // 취소를 누른 경우
+                    replyReviseCancel.setOnClickListener(){
+                        replyContentTv.visibility = View.VISIBLE
+                        replyContentEdt.visibility = View.INVISIBLE
+
+                        Log.d("CancelTag", "취소버튼 눌림")
+
+                        OkLayout.visibility = View.INVISIBLE
+                        reviseLayout.visibility = View.VISIBLE
+                    }
+
                     // 댓글 수정 확인 클릭한 경우
                     replyReviseOk.setOnClickListener(){
                         retrofitService.requestReplyRevise(ReplyReviseData(replyContentEdt.text.toString()), item.comment_id).enqueue(object : Callback<ReplyUpdateStatus>{
@@ -55,20 +76,25 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                                     reviseLayout.visibility = View.VISIBLE
 
                                     // 업데이트된 댓글 리스트 받아오고, 출력
-                                    resultList.clear()
+                                    Log.d("댓글 태그1", "1")
 
                                     if (postId != null) {
-                                        retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
-                                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-                                                response.body()?.let { resultList.addAll(it) }
-                                                recyclerAdapter.submitList(resultList.toList())
-                                            }
+                                        // 댓글 리스트 초기화 하기
+                                        resultList.clear()
 
-                                            override fun onFailure(call: Call<Reply>, t: Throwable) {
-                                                Log.d("empty", "Empty")
-                                            }
-
-                                        })
+                                        // 댓글 리스트 받아오기
+//                                        retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
+//                                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+//                                                response.body()?.let { resultList.addAll(it) }
+//                                                recyclerAdapter.submitList(resultList.toList())
+//                                                replyContentTv.text = replyContentEdt.text.toString()
+//                                            }
+//
+//                                            override fun onFailure(call: Call<Reply>, t: Throwable) {
+//                                                Log.d("empty", "Empty")
+//                                            }
+//
+//                                        })
                                     }
                                 }
                             }
@@ -79,16 +105,43 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                         })
                     }
 
-                    // 취소를 누른 경우
-                    replyReviseCancel.setOnClickListener(){
-                        replyContentTv.visibility = View.VISIBLE
-                        replyContentEdt.visibility = View.INVISIBLE
+                    // 댓글 삭제 누른 경우
+                    replyDelete.setOnClickListener(){
+                        retrofitService.requestReplyDelete(item.comment_id).enqueue(object : Callback<CommentDeleteStatus>{
+                            override fun onResponse(
+                                call: Call<CommentDeleteStatus>,
+                                response: Response<CommentDeleteStatus>,
+                            ) {
+                                Log.d("댓글 삭제 태그", "@@@@@@@")
 
-                        Log.d("CancelTag", "취소버튼 눌림")
+                                if (postId != null) {
+                                    // 댓글 리스트 초기화 하기
+                                    resultList.clear()
 
-                        OkLayout.visibility = View.INVISIBLE
-                        reviseLayout.visibility = View.VISIBLE
+                                    // 댓글 리스트 받아오기
+//                                    retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
+//                                        override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
+//                                            response.body()?.let { resultList.addAll(it) }
+//                                            recyclerAdapter.submitList(resultList.toList())
+//                                            replyContentTv.text = replyContentEdt.text.toString()
+//                                        }
+//
+//                                        override fun onFailure(call: Call<Reply>, t: Throwable) {
+//                                            Log.d("empty", "Empty")
+//                                        }
+//
+//                                    })
+                                }
+                            }
+
+                            override fun onFailure(call: Call<CommentDeleteStatus>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
                     }
+
+
                 }
             }
         }

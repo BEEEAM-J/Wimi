@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recruitmentofprojectteammembers.databinding.PostSearchresBinding
 import com.example.recruitmentofprojectteammembers.databinding.PostTitleBinding
 import data.PostModel
 import data.PostModelItem
@@ -15,7 +16,7 @@ import data.SrhPostModelItem
 
 class RecyclerAdapterSR : ListAdapter<SrhPostModelItem, RecyclerAdapterSR.ViewHolder>(diffUtil){
 
-    inner class ViewHolder(var binding: PostTitleBinding) :
+    inner class ViewHolder(var binding: PostSearchresBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         private val context = binding.root.context
@@ -39,7 +40,7 @@ class RecyclerAdapterSR : ListAdapter<SrhPostModelItem, RecyclerAdapterSR.ViewHo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(PostTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(PostSearchresBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, p1: Int) {

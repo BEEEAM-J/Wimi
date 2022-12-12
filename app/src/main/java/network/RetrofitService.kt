@@ -33,7 +33,7 @@ interface RetrofitService {
     ) : Call<ReviseStatus>
 
     // 게시물 삭제
-    @DELETE("project/write/deletePost/{deletePostId}")
+    @DELETE("project/post/deletePost/{deletePostId}")
     fun requestDelete(
         @Path("deletePostId", encoded = true) deletePostID : Int
     ) : Call<DeleteStatus>
@@ -55,7 +55,7 @@ interface RetrofitService {
     ) : Call<SrhPostModel>
 
     // 내가 쓴 글 목록
-    @GET("getMembersPostList/{member_id}")
+    @GET("project/post/getMembersPostList/{member_id}")
     fun requestMyPost(
         @Path("member_id", encoded = true) memberId: Int
     ) : Call<PostModel>
@@ -79,6 +79,12 @@ interface RetrofitService {
         @Body replyReviseData: ReplyReviseData,
         @Path("comment_id", encoded = true) commentId : Int
     ) : Call<ReplyUpdateStatus>
+
+    // 댓글 삭제
+    @DELETE("project/comment/delete/{comment_Id}")
+    fun requestReplyDelete(
+        @Path("comment_Id", encoded = true) commentId: Int
+    ) : Call<CommentDeleteStatus>
 
 
 
