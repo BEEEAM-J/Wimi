@@ -84,7 +84,7 @@ class DetailMyPostActivity : AppCompatActivity() {
         // 삭제 버튼 눌렀을 때
         binding.dmpBtnRemove.setOnClickListener(){
 
-//            삭제할 post_id를 서버로 전송 (post_id 변수 추가해야함)
+//           삭제할 post_id를 서버로 전송 (post_id 변수 추가해야함)
             retrofitService.requestDelete(mypostId).enqueue(object : Callback<DeleteStatus>{
                 override fun onResponse(call: Call<DeleteStatus>, response: Response<DeleteStatus>) {
                     if(response.body() == DeleteStatus("success")){

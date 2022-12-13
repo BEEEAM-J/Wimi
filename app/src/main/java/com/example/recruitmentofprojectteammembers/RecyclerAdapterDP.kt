@@ -15,7 +15,6 @@ import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.example.recruitmentofprojectteammembers.DetailPostActivity as DetailPostActivity1
 
 private lateinit var binding1: ActivityDetailPostBinding
 
@@ -31,9 +30,9 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                 replyContentEdt.setText(item.comment)
 
 //                binding1 = ActivityDetailPostBinding.inflate(layoutInflater)
-//
-//                // 리사이클러뷰 어댑터 선언
-//                binding1.dpReplyRecycler.layoutManager = LinearLayoutManager(DetailPostActivity1)
+
+                // 리사이클러뷰 어댑터 선언
+//                binding1.dpReplyRecycler.layoutManager = LinearLayoutManager(DetailPostActivity)
 //                val recyclerAdapter = RecyclerAdapterDP()
 //                binding1.dpReplyRecycler.adapter = recyclerAdapter
 
@@ -78,24 +77,16 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                                     // 업데이트된 댓글 리스트 받아오고, 출력
                                     Log.d("댓글 태그1", "1")
 
-                                    if (postId != null) {
-                                        // 댓글 리스트 초기화 하기
-                                        resultList.clear()
+                                    val reviseItem : Int = currentList.indexOf(item)
+                                    Log.d("댓글 수정 아이템", reviseItem.toString())
+                                    val tempList = mutableListOf<ReplyItem>()
+                                    tempList.addAll(currentList)
+                                    tempList[reviseItem].comment = replyContentEdt.text.toString()
+                                    Log.d("댓글 수정 아이템", tempList[reviseItem].comment.toString())
+                                    Log.d("수정된 댓글 아이템", tempList.toString())
+                                    Log.d("기존 댓글 아이템", currentList.toString())
+                                    submitList(tempList)
 
-                                        // 댓글 리스트 받아오기
-//                                        retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
-//                                            override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-//                                                response.body()?.let { resultList.addAll(it) }
-//                                                recyclerAdapter.submitList(resultList.toList())
-//                                                replyContentTv.text = replyContentEdt.text.toString()
-//                                            }
-//
-//                                            override fun onFailure(call: Call<Reply>, t: Throwable) {
-//                                                Log.d("empty", "Empty")
-//                                            }
-//
-//                                        })
-                                    }
                                 }
                             }
 
@@ -114,24 +105,12 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                             ) {
                                 Log.d("댓글 삭제 태그", "@@@@@@@")
 
-                                if (postId != null) {
-                                    // 댓글 리스트 초기화 하기
-                                    resultList.clear()
+                                val deleteItem = currentList.find { it.comment_id == item.comment_id }
+                                val tempList = mutableListOf<ReplyItem>()
+                                tempList.addAll(currentList)
+                                tempList.remove(deleteItem)
+                                submitList(tempList)
 
-                                    // 댓글 리스트 받아오기
-//                                    retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
-//                                        override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
-//                                            response.body()?.let { resultList.addAll(it) }
-//                                            recyclerAdapter.submitList(resultList.toList())
-//                                            replyContentTv.text = replyContentEdt.text.toString()
-//                                        }
-//
-//                                        override fun onFailure(call: Call<Reply>, t: Throwable) {
-//                                            Log.d("empty", "Empty")
-//                                        }
-//
-//                                    })
-                                }
                             }
 
                             override fun onFailure(call: Call<CommentDeleteStatus>, t: Throwable) {

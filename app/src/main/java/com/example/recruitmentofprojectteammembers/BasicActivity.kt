@@ -15,6 +15,7 @@ import retrofit2.Response
 
 private lateinit var binding: ActivityBasicBinding
 var postList : PostModel = PostModel()
+private lateinit var recyclerAdapterBS : RecyclerAdapterBS
 
 class BasicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,25 +34,11 @@ class BasicActivity : AppCompatActivity() {
 
         // 리사이클러뷰 어댑터 선언
         binding.bsRecyclerPost.layoutManager = manager
-        val recyclerAdapter = RecyclerAdapterBS()
-        binding.bsRecyclerPost.adapter = recyclerAdapter
+        recyclerAdapterBS = RecyclerAdapterBS()
+        binding.bsRecyclerPost.adapter = recyclerAdapterBS
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.bsRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
-        // 전체 게시글 불러오기
-        retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
-            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-                response.body()?.let { postList.addAll(it) }
-//                response.body()?.javaClass?.let { Log.d("tag", it.name) }
-                Log.d("tag112", postList.toString())
-                recyclerAdapter.submitList(postList.toList())
-            }
-
-            override fun onFailure(call: Call<PostModel>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
 
         // 게시물 등록시 해당 게시물의 제목 받아오기
 //        val startForResult = registerForActivityResult(
@@ -95,54 +82,27 @@ class BasicActivity : AppCompatActivity() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        setContentView(R.layout.activity_basic)
-//
-//        var searchCont : String
-//
-//        // 전체 게시물 불러오기
-//       retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
-//            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-//                response.body()?.let { postList.addAll(it) }
-////                response.body()?.javaClass?.let { Log.d("tag", it.name) }
-//                Log.d("tag112", postList.toString())
-//                val recyclerAdapter = RecyclerAdapterBS()
-//                recyclerAdapter.submitList(postList.toList())
-//            }
-//
-//            override fun onFailure(call: Call<PostModel>, t: Throwable) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-//
-//        // 내가 쓴 글 버튼 클릭 동작
-//        binding.bsCheckMyPost.setOnClickListener(){
-//
-//            val intent = Intent(this, MypostActivity::class.java)
-//            startActivity(intent)
-//
-//        }
-//
-//        // + 버튼 클릭 동작
-//        binding.bsPostingBtn.setOnClickListener(){
-//
-//            val intent = Intent(this, PostcontentActivity::class.java)
-//            startActivity(intent)
-////            startForResult.launch(intent)
-//
-//        }
-//
-//        // 검색 버튼 클릭 동작
-//        binding.bsSearchBtn.setOnClickListener(){
-//
-//            searchCont = binding.bsSearchEdt.text.toString()
-//            val intent = Intent(this, SearchResActivity::class.java)
-//            intent.putExtra("search", searchCont)
-//            startActivity(intent)
-//
-//        }
-//    }
+    override fun onResume() {
+        super.onResume()
+        postList.clear()
+
+        // 전체 게시물 불러오기
+        Log.d("finish시 실행", "2")
+       retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
+            override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                Log.d("finish하고 게시물 불러오기", "3")
+                response.body()?.let { postList.addAll(it) }
+//                response.body()?.javaClass?.let { Log.d("tag", it.name) }
+                Log.d("tag112", postList.toString())
+                recyclerAdapterBS.submitList(postList.toList())
+            }
+
+            override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
 
 }

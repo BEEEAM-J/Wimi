@@ -13,6 +13,7 @@ import retrofit2.Response
 
 private lateinit var binding : ActivityMypostBinding
 var MyPostList : PostModel = PostModel()
+private lateinit var recyclerAdapterMP: RecyclerAdapterMP
 
 class MypostActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +25,16 @@ class MypostActivity : AppCompatActivity() {
 
         // 리사이클러뷰 어댑터 선언
         binding.mpRecyclerPost.layoutManager = LinearLayoutManager(this@MypostActivity)
-        val recyclerAdapter = RecyclerAdapterMP()
-        binding.mpRecyclerPost.adapter = recyclerAdapter
+        recyclerAdapterMP = RecyclerAdapterMP()
+        binding.mpRecyclerPost.adapter = recyclerAdapterMP
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         // 내가 쓴 글 불러오기
         MyPostList.clear()
@@ -37,7 +43,7 @@ class MypostActivity : AppCompatActivity() {
                 response.body()?.let { MyPostList.addAll(it) }
 //                response.body()?.javaClass?.let { Log.d("tag", it.name) }
                 Log.d("tag112", MyPostList.toString())
-                recyclerAdapter.submitList(MyPostList.toList())
+                recyclerAdapterMP.submitList(MyPostList.toList())
             }
 
             override fun onFailure(call: Call<PostModel>, t: Throwable) {

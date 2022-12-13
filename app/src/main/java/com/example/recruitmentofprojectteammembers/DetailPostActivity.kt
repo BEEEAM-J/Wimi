@@ -13,6 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private lateinit var binding: ActivityDetailPostBinding
+lateinit var recyclerAdapterDP : RecyclerAdapterDP
 var resultList : Reply = Reply()
 var postId : Int = 0
 
@@ -36,8 +37,8 @@ class DetailPostActivity : AppCompatActivity() {
 
         // 리사이클러뷰 어댑터 선언
         binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
-        val recyclerAdapter = RecyclerAdapterDP()
-        binding.dpReplyRecycler.adapter = recyclerAdapter
+        recyclerAdapterDP = RecyclerAdapterDP()
+        binding.dpReplyRecycler.adapter = recyclerAdapterDP
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.dpReplyRecycler.addItemDecoration(recyclerDecoration(40))
 
@@ -58,16 +59,10 @@ class DetailPostActivity : AppCompatActivity() {
 
         })
 
-
         binding.dpTvusrname.text = "개발자 ${usrId}"
 
         Log.d("tag113", "댓글 동작 확인")
         Log.d("tag113", postId.toString())
-
-        // 처음에 댓글 리스트 받아오기
-        if (postId != null) {
-            renewReply()
-        }
 
 //        댓글 등록 버튼 클릭한 경우
         binding.dpReplyBtn.setOnClickListener(){
@@ -116,10 +111,10 @@ class DetailPostActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        renewReply()
-//    }
+    override fun onResume() {
+        super.onResume()
+        renewReply()
+    }
 
     fun printErrorMsg(){
         var dialog = AlertDialog.Builder(this@DetailPostActivity)
@@ -129,15 +124,12 @@ class DetailPostActivity : AppCompatActivity() {
     }
 
     fun renewReply(){
-        // 리사이클러뷰 어댑터 선언
-        binding.dpReplyRecycler.layoutManager = LinearLayoutManager(this@DetailPostActivity)
-        val recyclerAdapter = RecyclerAdapterDP()
-        binding.dpReplyRecycler.adapter = recyclerAdapter
-
+        resultList.clear()
+        // 댓글 불러오기
         retrofitService.requestReplyList(postId).enqueue(object : Callback<Reply>{
             override fun onResponse(call: Call<Reply>, response: Response<Reply>) {
                 response.body()?.let { resultList.addAll(it) }
-                recyclerAdapter.submitList(resultList.toList())
+                recyclerAdapterDP.submitList(resultList.toList())
             }
 
             override fun onFailure(call: Call<Reply>, t: Throwable) {
