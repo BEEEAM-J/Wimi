@@ -98,7 +98,7 @@
 
     <EditText
         android:id="@+id/replyContentEdt"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="내용 ㅋㅋ"
         android:textSize="14sp"
@@ -106,7 +106,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="8dp"
-        android:background="@drawable/edt_custom"
         android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

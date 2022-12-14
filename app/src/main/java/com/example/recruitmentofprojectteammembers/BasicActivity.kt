@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recruitmentofprojectteammembers.databinding.ActivityBasicBinding
 import data.PostModel
@@ -14,8 +15,9 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private lateinit var binding: ActivityBasicBinding
-var postList : PostModel = PostModel()
 private lateinit var recyclerAdapterBS : RecyclerAdapterBS
+var postList : PostModel = PostModel()
+var backKeyPressTime : Long = 0
 
 class BasicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +105,19 @@ class BasicActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    // 로그아웃 처리
+    override fun onBackPressed() {
+//        super.onBackPressed()
+        if(System.currentTimeMillis() > (backKeyPressTime + 2500)){
+            backKeyPressTime = System.currentTimeMillis()
+            Toast.makeText(this@BasicActivity, "한번 더 누르면 로그아웃 됩니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        else if(System.currentTimeMillis() <= (backKeyPressTime + 2500)){
+            finish()
+        }
     }
 
 }

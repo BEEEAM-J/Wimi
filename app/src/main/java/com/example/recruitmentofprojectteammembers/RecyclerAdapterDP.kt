@@ -1,9 +1,11 @@
 package com.example.recruitmentofprojectteammembers
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
@@ -16,8 +18,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private lateinit var binding1: ActivityDetailPostBinding
-
 class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(diffUtil){
 
     inner class ViewHolder(var binding: PostReplyBinding) :
@@ -29,13 +29,7 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                 replyContentTv.text = item.comment
                 replyContentEdt.setText(item.comment)
 
-//                binding1 = ActivityDetailPostBinding.inflate(layoutInflater)
-
-                // 리사이클러뷰 어댑터 선언
-//                binding1.dpReplyRecycler.layoutManager = LinearLayoutManager(DetailPostActivity)
-//                val recyclerAdapter = RecyclerAdapterDP()
-//                binding1.dpReplyRecycler.adapter = recyclerAdapter
-
+                // 본인의 댓글이 맞는 경우
                 if(loginResponse.member_id == item.comment_member_id){
 
                     reviseLayout.visibility = View.VISIBLE
@@ -45,6 +39,7 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                         replyContentTv.visibility = View.INVISIBLE
                         replyContentEdt.visibility = View.VISIBLE
 
+                        // 수정, 삭제 버튼을 숨기고 확인, 취소 버튼을 띄운다
                         OkLayout.visibility = View.VISIBLE
                         reviseLayout.visibility = View.INVISIBLE
 
@@ -58,42 +53,53 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
 
                         Log.d("CancelTag", "취소버튼 눌림")
 
+                        // 수정, 삭제 버튼을 띄우고 확인, 취소 버튼을 숨긴다
                         OkLayout.visibility = View.INVISIBLE
                         reviseLayout.visibility = View.VISIBLE
                     }
 
                     // 댓글 수정 확인 클릭한 경우
                     replyReviseOk.setOnClickListener(){
-                        retrofitService.requestReplyRevise(ReplyReviseData(replyContentEdt.text.toString()), item.comment_id).enqueue(object : Callback<ReplyUpdateStatus>{
-                            override fun onResponse(call: Call<ReplyUpdateStatus>, response: Response<ReplyUpdateStatus>, ) {
-                                // 수정이 성공적으로 된 경우
-                                if (response.body() == ReplyUpdateStatus("success")){
-                                    replyContentTv.visibility = View.VISIBLE
-                                    replyContentEdt.visibility = View.INVISIBLE
+                        // 내용이 입력되지 않은 경우
+                        if(replyContentEdt.text.toString() == ""){
+                            Toast.makeText(MyApplication.ApplicationContext(), "내용을 입력하세요!", Toast.LENGTH_SHORT).show()
+                        }
+                        // 내용이 입력된 경우
+                        else{
+                            retrofitService.requestReplyRevise(ReplyReviseData(replyContentEdt.text.toString()), item.comment_id).enqueue(object : Callback<ReplyUpdateStatus>{
+                                override fun onResponse(call: Call<ReplyUpdateStatus>, response: Response<ReplyUpdateStatus>, ) {
+                                    // 수정이 성공적으로 된 경우
+                                    if (response.body() == ReplyUpdateStatus("success")){
+                                        replyContentTv.visibility = View.VISIBLE
+                                        replyContentTv.text = replyContentEdt.text.toString()
+                                        replyContentEdt.visibility = View.INVISIBLE
 
-                                    OkLayout.visibility = View.INVISIBLE
-                                    reviseLayout.visibility = View.VISIBLE
+                                        // 확인, 취소 버튼 숨기고 수정, 삭제 버튼 띄우기
+                                        OkLayout.visibility = View.INVISIBLE
+                                        reviseLayout.visibility = View.VISIBLE
 
-                                    // 업데이트된 댓글 리스트 받아오고, 출력
-                                    Log.d("댓글 태그1", "1")
+                                        // 업데이트된 댓글 리스트 받아오고, 출력
+//                                    Log.d("댓글 태그1", "1")
+//
+//                                    val reviseItem : Int = currentList.indexOf(item)
+//                                    Log.d("댓글 수정 아이템", reviseItem.toString())
+//                                    val tempList = mutableListOf<ReplyItem>()
+//                                    tempList.addAll(currentList)
+//                                    tempList[reviseItem].comment = replyContentEdt.text.toString()
+//                                    tempList.filter { it.comment_id == item.comment_id }.forEach { it.comment = replyContentEdt.text.toString()}
+//                                    Log.d("댓글 수정 아이템", tempList[reviseItem].comment.toString())
+//                                    Log.d("수정된 댓글 아이템", tempList.toString())
+//                                    Log.d("기존 댓글 아이템", currentList.toString())
+//                                    submitList(tempList)
 
-                                    val reviseItem : Int = currentList.indexOf(item)
-                                    Log.d("댓글 수정 아이템", reviseItem.toString())
-                                    val tempList = mutableListOf<ReplyItem>()
-                                    tempList.addAll(currentList)
-                                    tempList[reviseItem].comment = replyContentEdt.text.toString()
-                                    Log.d("댓글 수정 아이템", tempList[reviseItem].comment.toString())
-                                    Log.d("수정된 댓글 아이템", tempList.toString())
-                                    Log.d("기존 댓글 아이템", currentList.toString())
-                                    submitList(tempList)
-
+                                    }
                                 }
-                            }
 
-                            override fun onFailure(call: Call<ReplyUpdateStatus>, t: Throwable, ) {
-                                TODO("Not yet implemented")
-                            }
-                        })
+                                override fun onFailure(call: Call<ReplyUpdateStatus>, t: Throwable, ) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+                        }
                     }
 
                     // 댓글 삭제 누른 경우
@@ -109,6 +115,8 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                                 val tempList = mutableListOf<ReplyItem>()
                                 tempList.addAll(currentList)
                                 tempList.remove(deleteItem)
+                                Log.d("수정된 댓글 아이템", tempList.toString())
+                                Log.d("기존 댓글 아이템", currentList.toString())
                                 submitList(tempList)
 
                             }
