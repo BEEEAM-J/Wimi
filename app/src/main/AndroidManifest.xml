@@ -25,6 +25,7 @@
         </activity>
         <activity
             android:name=".DetailMyPostActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -32,6 +33,7 @@
         </activity>
         <activity
             android:name=".DetailPostActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

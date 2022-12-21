@@ -47,7 +47,7 @@ class DetailPostActivity : AppCompatActivity() {
             override fun onResponse(call: Call<SrhPostModelItem>, response: Response<SrhPostModelItem>) {
                 var detailPost : SrhPostModelItem? = response.body()
                 if (detailPost != null) {
-                    binding.dpContent.text = detailPost.content
+                    binding.dpContent.text = detailPost.content + "\n"
                     binding.dpTitle.text = postTitle
 
                 }
@@ -64,11 +64,16 @@ class DetailPostActivity : AppCompatActivity() {
         Log.d("tag113", "댓글 동작 확인")
         Log.d("tag113", postId.toString())
 
-//        댓글 등록 버튼 클릭한 경우
+        // 댓글 입력할 때
+        binding.dpReplyEdt.setOnClickListener(){
+
+        }
+
+        // 댓글 등록 버튼 클릭한 경우
         binding.dpReplyBtn.setOnClickListener(){
             replyContent = binding.dpReplyEdt.text.toString()
 
-//            빈 값으로 댓글 등록을 시도하는 경우
+            // 빈 값으로 댓글 등록을 시도하는 경우
             if(binding.dpReplyEdt.text.toString() == ""){
                 var dialog = AlertDialog.Builder(this@DetailPostActivity)
                 dialog.setTitle("내용을 입력하세요.")
@@ -101,11 +106,6 @@ class DetailPostActivity : AppCompatActivity() {
 
                     })
                 }
-                // 리사이클러뷰에 출력할 리스트를 어댑터로 전송 (댓글 추가)
-//                resultList.add(Reply(loginResponse.member_name,replyContent))
-//                recyclerAdapter.submitList(resultList.toList())
-//
-//                binding.dpReplyEdt.setText("")
             }
 
         }

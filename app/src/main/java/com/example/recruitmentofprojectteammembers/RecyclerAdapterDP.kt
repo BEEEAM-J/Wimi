@@ -1,16 +1,13 @@
 package com.example.recruitmentofprojectteammembers
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recruitmentofprojectteammembers.databinding.ActivityDetailPostBinding
 import com.example.recruitmentofprojectteammembers.databinding.PostReplyBinding
 import data.*
 import network.RetrofitClient.retrofitService
@@ -78,20 +75,6 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                                         OkLayout.visibility = View.INVISIBLE
                                         reviseLayout.visibility = View.VISIBLE
 
-                                        // 업데이트된 댓글 리스트 받아오고, 출력
-//                                    Log.d("댓글 태그1", "1")
-//
-//                                    val reviseItem : Int = currentList.indexOf(item)
-//                                    Log.d("댓글 수정 아이템", reviseItem.toString())
-//                                    val tempList = mutableListOf<ReplyItem>()
-//                                    tempList.addAll(currentList)
-//                                    tempList[reviseItem].comment = replyContentEdt.text.toString()
-//                                    tempList.filter { it.comment_id == item.comment_id }.forEach { it.comment = replyContentEdt.text.toString()}
-//                                    Log.d("댓글 수정 아이템", tempList[reviseItem].comment.toString())
-//                                    Log.d("수정된 댓글 아이템", tempList.toString())
-//                                    Log.d("기존 댓글 아이템", currentList.toString())
-//                                    submitList(tempList)
-
                                     }
                                 }
 
@@ -109,7 +92,6 @@ class RecyclerAdapterDP : ListAdapter<ReplyItem, RecyclerAdapterDP.ViewHolder>(d
                                 call: Call<CommentDeleteStatus>,
                                 response: Response<CommentDeleteStatus>,
                             ) {
-                                Log.d("댓글 삭제 태그", "@@@@@@@")
 
                                 val deleteItem = currentList.find { it.comment_id == item.comment_id }
                                 val tempList = mutableListOf<ReplyItem>()

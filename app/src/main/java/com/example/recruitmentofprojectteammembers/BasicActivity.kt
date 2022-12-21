@@ -42,18 +42,6 @@ class BasicActivity : AppCompatActivity() {
         binding.bsRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
 
-        // 게시물 등록시 해당 게시물의 제목 받아오기
-//        val startForResult = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()
-//        ) { result: ActivityResult ->
-//            if (result.resultCode == RESULT_OK) {
-//                val postTitle = result.data?.getStringExtra("postTitle").toString()
-//                val postContent = result.data?.getStringExtra("postContent").toString()
-//                postList.add(PostModel(1, 1, postTitle, postContent))
-//                recyclerAdapter.submitList(postList.toList())
-//            }
-//        }
-
         // 내가 쓴 글 버튼 클릭 동작
         binding.bsCheckMyPost.setOnClickListener(){
 
@@ -80,7 +68,6 @@ class BasicActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
-
 
     }
 
@@ -109,7 +96,6 @@ class BasicActivity : AppCompatActivity() {
 
     // 로그아웃 처리
     override fun onBackPressed() {
-//        super.onBackPressed()
         if(System.currentTimeMillis() > (backKeyPressTime + 2500)){
             backKeyPressTime = System.currentTimeMillis()
             Toast.makeText(this@BasicActivity, "한번 더 누르면 로그아웃 됩니다.", Toast.LENGTH_SHORT).show()

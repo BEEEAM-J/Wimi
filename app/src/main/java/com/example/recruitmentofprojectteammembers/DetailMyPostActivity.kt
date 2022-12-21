@@ -32,9 +32,6 @@ class DetailMyPostActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-
-
         // 게시물 상세보기
         retrofitService.requestDetailPost(mypostId).enqueue(object : Callback<SrhPostModelItem> {
             override fun onResponse(call: Call<SrhPostModelItem>, response: Response<SrhPostModelItem>) {
@@ -99,7 +96,6 @@ class DetailMyPostActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<DeleteStatus>, t: Throwable) {
                     TODO("Not yet implemented")
                 }
-
             })
 
             Toast.makeText(this@DetailMyPostActivity, "게시물이 삭제되었습니다.", Toast.LENGTH_SHORT).show()

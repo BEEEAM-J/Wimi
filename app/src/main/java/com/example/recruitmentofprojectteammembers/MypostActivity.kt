@@ -30,7 +30,6 @@ class MypostActivity : AppCompatActivity() {
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
 
-
     }
 
     override fun onResume() {
