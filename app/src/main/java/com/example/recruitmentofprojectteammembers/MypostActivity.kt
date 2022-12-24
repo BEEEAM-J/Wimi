@@ -1,15 +1,18 @@
 package com.example.recruitmentofprojectteammembers
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recruitmentofprojectteammembers.databinding.ActivityMypostBinding
 import data.PostModel
 import network.RetrofitClient.retrofitService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 private lateinit var binding : ActivityMypostBinding
 var MyPostList : PostModel = PostModel()
@@ -29,6 +32,22 @@ class MypostActivity : AppCompatActivity() {
         binding.mpRecyclerPost.adapter = recyclerAdapterMP
         // 리사이클러뷰 아이템 공백 설정 클래스 적용
         binding.mpRecyclerPost.addItemDecoration(recyclerDecoration(40))
+
+
+
+//        binding.mpRecyclerPost.setOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                if (!binding.mpRecyclerPost.canScrollVertically(-1)) {
+//                    Log.i("태그", "Top of list")
+//                    Toast.makeText(this@MypostActivity, "맨 위!", Toast.LENGTH_SHORT).show()
+//                } else if (!binding.mpRecyclerPost.canScrollVertically(1)) {
+//                    Log.i("태그", "End of list")
+//                    Toast.makeText(this@MypostActivity, "맨 끝!", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Log.i("태그", "idle")
+//                }
+//            }
+//        })
 
     }
 

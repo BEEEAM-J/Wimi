@@ -39,8 +39,11 @@ interface RetrofitService {
     ) : Call<DeleteStatus>
 
     // 전체 게시글 불러오기
-    @GET("project/post/getAllPostList")
-    fun requestPostList() : Call<PostModel>
+    @GET("project/post/posts_with_page")
+    fun requestPostList(
+        @Query("page") page : Int,
+        @Query("limit") limit : Int
+    ) : Call<PostModel>
 
     // 게시물 상세정보
     @GET("project/post/getPostDetail/{post_id}")

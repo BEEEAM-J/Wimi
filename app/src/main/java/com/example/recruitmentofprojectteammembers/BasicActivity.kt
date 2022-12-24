@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recruitmentofprojectteammembers.databinding.ActivityBasicBinding
 import data.PostModel
 import data.PostModelItem
@@ -18,13 +19,17 @@ private lateinit var binding: ActivityBasicBinding
 private lateinit var recyclerAdapterBS : RecyclerAdapterBS
 var postList : PostModel = PostModel()
 var backKeyPressTime : Long = 0
+var page : Int = 1
+var limit : Int = 7
 
+@Suppress("DEPRECATION")
 class BasicActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic)
 
         var searchCont : String
+
 
         binding = ActivityBasicBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,14 +80,11 @@ class BasicActivity : AppCompatActivity() {
         super.onResume()
         postList.clear()
 
-        // 전체 게시물 불러오기
-        Log.d("finish시 실행", "2")
-       retrofitService.requestPostList().enqueue(object : Callback<PostModel>{
+        // 처음 게시물 불러오기
+       retrofitService.requestPostList(page, limit).enqueue(object : Callback<PostModel>{
             override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
-                Log.d("finish하고 게시물 불러오기", "3")
                 response.body()?.let { postList.addAll(it) }
 //                response.body()?.javaClass?.let { Log.d("tag", it.name) }
-                Log.d("tag112", postList.toString())
                 recyclerAdapterBS.submitList(postList.toList())
             }
 
@@ -90,6 +92,41 @@ class BasicActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
 
+        })
+
+//        binding.bsRecyclerPost.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//
+//                Toast.makeText(this@BasicActivity, "끝!", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+
+        binding.bsRecyclerPost.setOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!binding.bsRecyclerPost.canScrollVertically(1)) {
+                    Log.i("태그", "End of list")
+//                    Toast.makeText(this@BasicActivity, "맨 끝!", Toast.LENGTH_SHORT).show()
+
+                    page += 1
+
+                    // RecyclerView의 끝에 도달하면 다음 게시물들을 불러옴
+                   retrofitService.requestPostList(page, limit).enqueue(object : Callback<PostModel>{
+                        override fun onResponse(call: Call<PostModel>, response: Response<PostModel>) {
+                            response.body()?.let { postList.addAll(it) }
+//                response.body()?.javaClass?.let { Log.d("tag", it.name) }
+                            recyclerAdapterBS.submitList(postList.toList())
+                        }
+
+                        override fun onFailure(call: Call<PostModel>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                } else {
+                    Log.i("태그", "idle")
+                }
+            }
         })
 
     }

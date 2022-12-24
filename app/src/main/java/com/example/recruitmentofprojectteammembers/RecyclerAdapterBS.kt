@@ -36,6 +36,14 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
         }
     }
 
+//    override fun getItemViewType(position: Int): Int {
+//        return if (items[position] != null) {
+//            ITEM
+//        } else {
+//            LOADING
+//        }
+//    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(PostTitleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
@@ -46,15 +54,19 @@ class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolde
     }
 
     companion object {
+
+        const val ITEM = 1
+        const val LOADING = 0
+
         // diffUtil: currentList에 있는 각 아이템들을 비교하여 최신 상태를 유지하도록 한다.
         val diffUtil = object : DiffUtil.ItemCallback<PostModelItem>() {
 
-            //            두 아이템이 동일한 아이템인지 확인
+            // 두 아이템이 동일한 아이템인지 확인
             override fun areItemsTheSame(oldItem: PostModelItem, newItem: PostModelItem): Boolean {
                 return oldItem == newItem
             }
 
-            //            두 아이템이 동일한 내용을 가지고 있는지 확인
+            // 두 아이템이 동일한 내용을 가지고 있는지 확인 (areItemsTheSame 이 true일 때만 호출된다.)
             override fun areContentsTheSame(oldItem: PostModelItem, newItem: PostModelItem): Boolean {
                 return oldItem == newItem
             }
