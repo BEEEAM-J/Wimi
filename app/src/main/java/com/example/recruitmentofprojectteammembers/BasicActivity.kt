@@ -19,8 +19,6 @@ private lateinit var binding: ActivityBasicBinding
 private lateinit var recyclerAdapterBS : RecyclerAdapterBS
 var postList : PostModel = PostModel()
 var backKeyPressTime : Long = 0
-var page : Int = 1
-var limit : Int = 7
 
 @Suppress("DEPRECATION")
 class BasicActivity : AppCompatActivity() {
@@ -36,8 +34,8 @@ class BasicActivity : AppCompatActivity() {
 
         // 리사이클러뷰 역순 설정
         val manager = LinearLayoutManager(this@BasicActivity)
-        manager.reverseLayout = true
-        manager.stackFromEnd = true
+//        manager.reverseLayout = true
+//        manager.stackFromEnd = true
 
         // 리사이클러뷰 어댑터 선언
         binding.bsRecyclerPost.layoutManager = manager
@@ -78,6 +76,9 @@ class BasicActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        var page : Int = 1
+        var limit : Int = 7
         postList.clear()
 
         // 처음 게시물 불러오기
@@ -102,6 +103,7 @@ class BasicActivity : AppCompatActivity() {
 //            }
 //        })
 
+        // 무한 스크롤
         binding.bsRecyclerPost.setOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!binding.bsRecyclerPost.canScrollVertically(1)) {

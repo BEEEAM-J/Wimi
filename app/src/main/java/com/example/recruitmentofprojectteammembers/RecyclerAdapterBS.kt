@@ -11,7 +11,6 @@ import com.example.recruitmentofprojectteammembers.databinding.PostTitleBinding
 import data.PostModel
 import data.PostModelItem
 
-
 class RecyclerAdapterBS : ListAdapter<PostModelItem, RecyclerAdapterBS.ViewHolder>(diffUtil){
 
     inner class ViewHolder(var binding: PostTitleBinding) :
